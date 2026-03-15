@@ -169,20 +169,20 @@ export default function Home() {
             <div className="mt-16 bg-gradient-to-r from-slate-900 to-blue-900 text-white p-12 rounded-lg">
               <div className="grid md:grid-cols-4 gap-8 text-center">
                 <div>
-                  <div className="text-4xl font-bold text-amber-400 mb-2">50</div>
-                  <div className="text-sm text-gray-300">Years of Ministry</div>
+                  <div className="text-4xl font-bold text-amber-400 mb-2">25</div>
+                  <div className="text-sm text-gray-300">Years of North America Ministry</div>
                 </div>
                 <div>
-                  <div className="text-4xl font-bold text-amber-400 mb-2">15</div>
+                  <div className="text-4xl font-bold text-amber-400 mb-2">14</div>
                   <div className="text-sm text-gray-300">Graduate Batches</div>
                 </div>
                 <div>
-                  <div className="text-4xl font-bold text-amber-400 mb-2">4</div>
-                  <div className="text-sm text-gray-300">Global Extensions</div>
+                  <div className="text-4xl font-bold text-amber-400 mb-2">2</div>
+                  <div className="text-sm text-gray-300">Bible School Programs</div>
                 </div>
                 <div>
-                  <div className="text-4xl font-bold text-amber-400 mb-2">100+</div>
-                  <div className="text-sm text-gray-300">Churches Established</div>
+                  <div className="text-4xl font-bold text-amber-400 mb-2">1</div>
+                  <div className="text-sm text-gray-300">End-Time Mission</div>
                 </div>
               </div>
             </div>
