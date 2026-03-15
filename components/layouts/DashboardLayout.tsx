@@ -16,6 +16,7 @@ import {
   BellIcon,
   CalendarIcon,
   EyeIcon,
+  ChartBarIcon,
 } from '@heroicons/react/24/outline';
 import { NotificationBadge } from '@/components/notifications/NotificationBadge';
 
@@ -33,6 +34,7 @@ const navigation: NavItem[] = [
   { name: 'Calendar', href: '/calendar', icon: CalendarIcon },
   { name: 'Observers', href: '/observers', icon: EyeIcon, roles: ['observer'] },
   { name: 'Users', href: '/users', icon: UserGroupIcon, roles: ['admin', 'teacher'] },
+  { name: 'Metrics', href: '/metrics', icon: ChartBarIcon, roles: ['admin', 'teacher', 'ta'] },
   { name: 'Settings', href: '/settings', icon: Cog6ToothIcon },
 ];
 
