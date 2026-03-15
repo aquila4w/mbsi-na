@@ -14,39 +14,49 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon
 } from '@heroicons/react/24/outline';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const galleryImages = [
-  { src: 'https://images.mbsina.org/15th%20graduates/637807822_1455506689705188_2147421424948348184_n.jpg', alt: '15th Batch Graduation' },
-  { src: 'https://images.mbsina.org/15th%20graduates/639211978_1455506789705178_802827867471334020_n.jpg', alt: '15th Batch Graduation Ceremony' },
-  { src: 'https://images.mbsina.org/15th%20graduates/640064754_1455506819705175_1592351915056187878_n.jpg', alt: 'Graduation Celebration' },
-  { src: 'https://images.mbsina.org/15th%20graduates/641301821_1455507419705115_1060118589497064263_n.jpg', alt: 'Graduate Group Photo' },
-  { src: 'https://images.mbsina.org/15th%20graduates/641407618_1457085176214006_8337787100156009729_n.jpg', alt: 'Graduation Day' },
-  { src: 'https://images.mbsina.org/15th%20graduates/637018056_1455507223038468_3760551512057146808_n.jpg', alt: 'Graduate Ministers' },
-  { src: 'https://images.mbsina.org/15th%20graduates/637169268_1455507156371808_2524918957964297884_n.jpg', alt: 'Batch 15 Ministers' },
+  { src: 'https://images.mbsina.org/641303403_1456153922973798_4837987518281799659_n.jpg', alt: '15th Batch Graduation' },
+  { src: 'https://images.mbsina.org/641316266_1456153892973801_3874141486794394358_n.jpg', alt: 'Graduation Ceremony' },
+  { src: 'https://images.mbsina.org/640398137_1456153876307136_8509879117469714915_n.jpg', alt: 'Graduate Group Photo' },
+  { src: 'https://images.mbsina.org/641388672_1456153836307140_2469215302247896029_n.jpg', alt: 'Graduation Day' },
+  { src: 'https://images.mbsina.org/641010068_1456153636307160_6158663428550680771_n.jpg', alt: 'Graduate Ministers' },
+  { src: 'https://images.mbsina.org/640330441_1456153496307174_1273870152391168587_n.jpg', alt: 'Ministry Ceremony' },
+  { src: 'https://images.mbsina.org/637883399_1455506386371885_2410036573811370447_n.jpg', alt: 'Campus Gathering' },
 ];
 
-const campusImages = [
-  { src: 'https://images.mbsina.org/637649654_1455506319705225_1491741129420180902_n.jpg', alt: 'Campus Life' },
-  { src: 'https://images.mbsina.org/637762786_1455506283038562_1247305276317172394_n.jpg', alt: 'Campus Gathering' },
-  { src: 'https://images.mbsina.org/637002293_1455505983038592_529621221909948630_n.jpg', alt: 'Ministry Training' },
-  { src: 'https://images.mbsina.org/637830056_1455520049703852_6398612744105539037_n.jpg', alt: 'Campus Community' },
-  { src: 'https://images.mbsina.org/637838964_1455513643037826_8697834871975361149_n.jpg', alt: 'Student Life' },
-  { src: 'https://images.mbsina.org/637848694_1455513696371154_8778760080235421395_n.jpg', alt: 'MBSI Community' },
+const graduatesImages = [
+  'https://images.mbsina.org/637649654_1455506319705225_1491741129420180902_n.jpg',
+  'https://images.mbsina.org/637762786_1455506283038562_1247305276317172394_n.jpg',
+  'https://images.mbsina.org/641192777_1455506433038547_6362646209918826261_n.jpg',
+  'https://images.mbsina.org/637655617_1455507183038472_6231199999404545892_n.jpg',
+  'https://images.mbsina.org/637769863_1455507136371810_6263204516673870441_n.jpg',
+  'https://images.mbsina.org/637002293_1455505983038592_529621221909948630_n.jpg',
+  'https://images.mbsina.org/641467736_1455506976371826_6639366107527773460_n.jpg',
+  'https://images.mbsina.org/637830056_1455520049703852_6398612744105539037_n.jpg',
 ];
 
 function GalleryCarousel({ images }: { images: { src: string; alt: string }[] }) {
   const [current, setCurrent] = useState(0);
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((c) => (c === images.length - 1 ? 0 : c + 1));
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [images.length]);
+
   const prev = () => setCurrent((c) => (c === 0 ? images.length - 1 : c - 1));
   const next = () => setCurrent((c) => (c === images.length - 1 ? 0 : c + 1));
 
   return (
-    <div className="relative overflow-hidden rounded-lg shadow-2xl aspect-[4/3]">
+    <div className="relative overflow-hidden shadow-2xl aspect-[4/3] group" style={{ borderRadius: '2px', border: '3px solid rgba(245,158,11,0.5)' }}>
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent z-10 pointer-events-none"></div>
       {images.map((img, i) => (
         <div
           key={i}
-          className={`absolute inset-0 transition-opacity duration-700 ${i === current ? 'opacity-100' : 'opacity-0'}`}
+          className={`absolute inset-0 transition-all duration-1000 ${i === current ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}`}
         >
           <img
             src={img.src}
@@ -57,35 +67,65 @@ function GalleryCarousel({ images }: { images: { src: string; alt: string }[] })
       ))}
       <button
         onClick={prev}
-        className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all z-10"
+        className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-amber-500 text-white p-2.5 rounded-full transition-all z-20 opacity-0 group-hover:opacity-100"
         aria-label="Previous"
       >
         <ChevronLeftIcon className="w-5 h-5" />
       </button>
       <button
         onClick={next}
-        className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all z-10"
+        className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-amber-500 text-white p-2.5 rounded-full transition-all z-20 opacity-0 group-hover:opacity-100"
         aria-label="Next"
       >
         <ChevronRightIcon className="w-5 h-5" />
       </button>
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
         {images.map((_, i) => (
           <button
             key={i}
             onClick={() => setCurrent(i)}
-            className={`w-2 h-2 rounded-full transition-all ${i === current ? 'bg-white scale-125' : 'bg-white/50'}`}
+            className={`transition-all duration-300 rounded-full ${i === current ? 'bg-amber-400 w-6 h-2' : 'bg-white/50 w-2 h-2 hover:bg-white/80'}`}
             aria-label={`Go to slide ${i + 1}`}
           />
         ))}
+      </div>
+      <div className="absolute bottom-4 right-4 z-20 bg-black/50 text-white text-xs px-2 py-1 rounded font-medium">
+        {current + 1} / {images.length}
       </div>
     </div>
   );
 }
 
-export default function Home() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+function ParallaxSection({ children, src, overlayClass, className }: { children: React.ReactNode; src: string; overlayClass?: string; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [offset, setOffset] = useState(0);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!ref.current) return;
+      const rect = ref.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const sectionCenter = rect.top + rect.height / 2;
+      const viewportCenter = viewportHeight / 2;
+      setOffset((sectionCenter - viewportCenter) * 0.3);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <section ref={ref} className={`relative overflow-hidden ${className || ''}`}>
+      <div className="absolute inset-0" style={{ transform: `translateY(${offset}px)`, willChange: 'transform', top: '-15%', bottom: '-15%' }}>
+        <img src={src} alt="" className="w-full h-full object-cover" aria-hidden="true" />
+      </div>
+      <div className={`absolute inset-0 ${overlayClass || 'bg-gradient-to-r from-blue-900/92 via-slate-900/88 to-blue-900/92'}`}></div>
+      <div className="relative">{children}</div>
+    </section>
+  );
+}
+
+export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
@@ -147,7 +187,7 @@ export default function Home() {
               <div className="lg:col-span-7">
                 <div className="inline-flex items-center px-4 py-1.5 bg-amber-500/20 backdrop-blur-sm rounded-full text-xs font-medium tracking-wide mb-6 border border-amber-400/50 text-amber-200">
                   <FireIcon className="w-4 h-4 mr-2" />
-                  Since 1975 - Celebrating 50 Years
+                  Since 1997 - Celebrating Three Decades
                 </div>
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6 leading-tight">
                   Maranatha Bible School International
@@ -236,12 +276,12 @@ export default function Home() {
             <div className="mt-16 bg-gradient-to-r from-slate-900 to-blue-900 text-white p-12 rounded-lg">
               <div className="grid md:grid-cols-4 gap-8 text-center">
                 <div>
-                  <div className="text-4xl font-bold text-amber-400 mb-2">25</div>
-                  <div className="text-sm text-gray-300">Years of North America Ministry</div>
-                </div>
-                <div>
                   <div className="text-4xl font-bold text-amber-400 mb-2">14</div>
                   <div className="text-sm text-gray-300">Graduate Batches</div>
+                </div>
+                <div>
+                  <div className="text-4xl font-bold text-amber-400 mb-2">3</div>
+                  <div className="text-sm text-gray-300">Decades of North America Ministry</div>
                 </div>
                 <div>
                   <div className="text-4xl font-bold text-amber-400 mb-2">2</div>
@@ -267,23 +307,20 @@ export default function Home() {
                 Generation after generation, MBSI North America sends out approved ministers of Jesus Christ into the harvest field.
               </p>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-              {[
-                'https://images.mbsina.org/15th%20graduates/637807822_1455506689705188_2147421424948348184_n.jpg',
-                'https://images.mbsina.org/15th%20graduates/639211978_1455506789705178_802827867471334020_n.jpg',
-                'https://images.mbsina.org/15th%20graduates/640064754_1455506819705175_1592351915056187878_n.jpg',
-                'https://images.mbsina.org/637649654_1455506319705225_1491741129420180902_n.jpg',
-                'https://images.mbsina.org/15th%20graduates/641301821_1455507419705115_1060118589497064263_n.jpg',
-                'https://images.mbsina.org/15th%20graduates/641407618_1457085176214006_8337787100156009729_n.jpg',
-                'https://images.mbsina.org/15th%20graduates/637018056_1455507223038468_3760551512057146808_n.jpg',
-                'https://images.mbsina.org/15th%20graduates/637169268_1455507156371808_2524918957964297884_n.jpg',
-              ].map((src, i) => (
-                <div key={i} className="aspect-square overflow-hidden rounded-lg">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {graduatesImages.map((src, i) => (
+                <div
+                  key={i}
+                  className="aspect-square overflow-hidden group relative"
+                  style={{ border: '2px solid rgba(245,158,11,0.3)', boxShadow: '0 4px 20px rgba(0,0,0,0.5)' }}
+                >
                   <img
                     src={src}
                     alt={`Graduate ${i + 1}`}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover transition-all duration-700 group-hover:scale-115 group-hover:brightness-110"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-amber-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                 </div>
               ))}
             </div>
@@ -311,7 +348,7 @@ export default function Home() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-              <div className="bg-white border-2 border-gray-200 hover:border-amber-500 transition-all duration-300 group">
+              <div className="bg-white border-2 border-gray-200 hover:border-amber-500 transition-all duration-300 group shadow-sm hover:shadow-lg">
                 <div className="p-8">
                   <div className="w-12 h-12 bg-amber-500 rounded flex items-center justify-center mb-6">
                     <HeartIcon className="w-6 h-6 text-white" />
@@ -348,7 +385,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="bg-white border-2 border-blue-900 shadow-lg relative">
+              <div className="bg-white border-2 border-blue-900 shadow-lg relative hover:shadow-xl transition-all duration-300">
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-900 text-white px-4 py-1 text-xs font-semibold rounded-full">
                   MOST COMPREHENSIVE
                 </div>
@@ -413,48 +450,41 @@ export default function Home() {
             </div>
 
             <div className="grid lg:grid-cols-2 gap-8 items-center mb-12">
-              <div className="grid grid-cols-2 gap-3">
-                <div className="aspect-square overflow-hidden rounded-lg">
-                  <img
-                    src="https://images.mbsina.org/gym/535553707_1302720071650518_4695658712920848632_n.jpg"
-                    alt="Campus Gym"
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="aspect-square overflow-hidden rounded-lg">
-                  <img
-                    src="https://images.mbsina.org/gym/535603733_1302720068317185_770222141414855370_n.jpg"
-                    alt="Campus Facilities"
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="aspect-square overflow-hidden rounded-lg">
-                  <img
-                    src="https://images.mbsina.org/gym/536270601_1302720078317184_6495101031103246003_n.jpg"
-                    alt="Gym Facilities"
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="aspect-square overflow-hidden rounded-lg">
-                  <img
-                    src="https://images.mbsina.org/637789203_1455513483037842_949561862806831416_n.jpg"
-                    alt="Campus Community"
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { src: 'https://images.mbsina.org/gym/535553707_1302720071650518_4695658712920848632_n.jpg', label: 'Gym' },
+                  { src: 'https://images.mbsina.org/gym/535603733_1302720068317185_770222141414855370_n.jpg', label: 'Facilities' },
+                  { src: 'https://images.mbsina.org/gym/536270601_1302720078317184_6495101031103246003_n.jpg', label: 'Recreation' },
+                  { src: 'https://images.mbsina.org/637789203_1455513483037842_949561862806831416_n.jpg', label: 'Community' },
+                ].map((item, i) => (
+                  <div
+                    key={i}
+                    className="aspect-square overflow-hidden group relative"
+                    style={{ border: '2px solid #e5e7eb', boxShadow: '0 2px 12px rgba(0,0,0,0.1)' }}
+                  >
+                    <img
+                      src={item.src}
+                      alt={item.label}
+                      className="w-full h-full object-cover transition-all duration-700 group-hover:scale-115 group-hover:brightness-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-blue-900/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                    <span className="absolute bottom-2 left-0 right-0 text-center text-white text-xs font-semibold tracking-wide opacity-0 group-hover:opacity-100 transition-opacity duration-500">{item.label}</span>
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center"></div>
+                  </div>
+                ))}
               </div>
               <div className="space-y-6">
-                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all duration-300">
                   <BookOpenIcon className="w-10 h-10 text-blue-900 mb-4" />
                   <h3 className="text-lg font-bold text-gray-900 mb-2">Libraries & Classrooms</h3>
                   <p className="text-sm text-gray-600">Extensive theological resources and modern learning spaces designed for deep biblical study and discipleship.</p>
                 </div>
-                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all duration-300">
                   <UserGroupIcon className="w-10 h-10 text-blue-900 mb-4" />
                   <h3 className="text-lg font-bold text-gray-900 mb-2">Multi-Purpose Theaters</h3>
                   <p className="text-sm text-gray-600">State-of-the-art facilities for worship, ministry gatherings, and special events throughout the academic year.</p>
                 </div>
-                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all duration-300">
                   <SparklesIcon className="w-10 h-10 text-blue-900 mb-4" />
                   <h3 className="text-lg font-bold text-gray-900 mb-2">Campus Amenities</h3>
                   <p className="text-sm text-gray-600">On-campus gym, recreation areas, and full student support facilities to support holistic student development.</p>
@@ -464,16 +494,12 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="relative py-20 overflow-hidden">
-          <div className="absolute inset-0">
-            <img
-              src="https://images.mbsina.org/637766449_1455513386371185_3451572275493343593_n.jpg"
-              alt="MBSI Ministry"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-900/92 via-slate-900/88 to-blue-900/92"></div>
-          </div>
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <ParallaxSection
+          src="https://images.mbsina.org/637766449_1455513386371185_3451572275493343593_n.jpg"
+          overlayClass="bg-gradient-to-r from-blue-900/92 via-slate-900/88 to-blue-900/92"
+          className="py-20"
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="lg:flex lg:items-center lg:justify-between">
               <div className="lg:w-2/3">
                 <h2 className="text-3xl font-bold mb-4 text-white">
@@ -502,7 +528,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </ParallaxSection>
       </main>
 
       <footer id="contact" className="bg-slate-900 text-white">
@@ -531,7 +557,7 @@ export default function Home() {
                 © 2026 MBSI North America Extension. All rights reserved.
               </p>
               <p className="text-xs text-gray-600 mt-2">
-                Founded 1975 - Celebrating 50 Years of Ministry
+                Founded 1997 - Celebrating Three Decades of Ministry
               </p>
             </div>
 
