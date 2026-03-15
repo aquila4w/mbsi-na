@@ -16,7 +16,7 @@ export default function AboutPage() {
                     alt="MBSI Logo"
                     width={60}
                     height={60}
-                                      />
+                  />
                   <div>
                     <h1 className="text-lg font-bold text-gray-900 leading-tight">MBSI</h1>
                     <p className="text-xs text-gray-600">North America Extension</p>
@@ -41,8 +41,16 @@ export default function AboutPage() {
       </header>
 
       <main>
-        <section className="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="relative text-white py-24 overflow-hidden">
+          <div className="absolute inset-0">
+            <img
+              src="https://images.mbsina.org/637883399_1455506386371885_2410036573811370447_n.jpg"
+              alt="MBSI Community"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-900/88 via-blue-900/80 to-slate-900/88"></div>
+          </div>
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Link href="/" className="inline-flex items-center text-blue-200 hover:text-white mb-8 text-sm">
               <ArrowLeftIcon className="w-4 h-4 mr-2" />
               Back to Home
@@ -75,42 +83,66 @@ export default function AboutPage() {
                 </div>
               </div>
               <div className="mt-12 lg:mt-0">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-blue-500/20 blur-3xl"></div>
-                  <Image
-                    src="/mbsi-logo.png"
-                    alt="MBSI Logo"
-                    width={500}
-                    height={500}
-                    className="relative rounded-lg shadow-xl"
-                  />
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="aspect-square overflow-hidden rounded-lg row-span-2">
+                    <img
+                      src="https://images.mbsina.org/637002293_1455505983038592_529621221909948630_n.jpg"
+                      alt="MBSI History"
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="aspect-square overflow-hidden rounded-lg">
+                    <img
+                      src="https://images.mbsina.org/637762786_1455506283038562_1247305276317172394_n.jpg"
+                      alt="MBSI Community"
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="aspect-square overflow-hidden rounded-lg">
+                    <img
+                      src="https://images.mbsina.org/637830056_1455520049703852_6398612744105539037_n.jpg"
+                      alt="Ministry Training"
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
 
             <div className="bg-gradient-to-br from-blue-50 to-amber-50 p-12 rounded-lg mb-20">
               <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">The North America Extension Story</h3>
-              <div className="space-y-6 max-w-4xl mx-auto">
-                <p className="text-gray-700 leading-relaxed">
-                  The <span className="font-semibold text-blue-900">North America Extension</span> was the first of the global extensions and remains the largest within the global mission. It was formed in <span className="font-semibold">1997</span> through the efforts of <span className="font-semibold">Apostle Jonathan S. Ferriol</span> and <span className="font-semibold">Presbyter Marites Ferriol</span> with only a handful of students.
-                </p>
-                <p className="text-gray-700 leading-relaxed">
-                  Over 25 years later, MBSI has graduated <span className="font-semibold text-blue-900">14 batches of full-fledged ministers</span>, with the 15th batch set to graduate this year, 2026, alongside dozens of Apostolic Missionary Program (AMP) interns.
-                </p>
-                <p className="text-gray-700 leading-relaxed">
-                  Its alumni have emerged as flourishing leaders within the church, serving as coordinators, sub-coordinators, and MBSI faculty members. Furthermore, graduates have established <span className="font-semibold text-blue-900">numerous churches across the United States, Canada, and Latin America</span>.
-                </p>
-                <p className="text-gray-700 leading-relaxed">
-                  In 2020, the school rebranded to <span className="font-semibold">Maranatha Bible School International</span> to reflect its ever-expanding global mission.
-                </p>
+              <div className="lg:grid lg:grid-cols-2 lg:gap-12 items-center">
+                <div className="space-y-6 max-w-2xl">
+                  <p className="text-gray-700 leading-relaxed">
+                    The <span className="font-semibold text-blue-900">North America Extension</span> was the first of the global extensions and remains the largest within the global mission. It was formed in <span className="font-semibold">1997</span> through the efforts of <span className="font-semibold">Apostle Jonathan S. Ferriol</span> and <span className="font-semibold">Presbyter Marites Ferriol</span> with only a handful of students.
+                  </p>
+                  <p className="text-gray-700 leading-relaxed">
+                    Over 25 years later, MBSI has graduated <span className="font-semibold text-blue-900">14 batches of full-fledged ministers</span>, with the 15th batch set to graduate this year, 2026, alongside dozens of Apostolic Missionary Program (AMP) interns.
+                  </p>
+                  <p className="text-gray-700 leading-relaxed">
+                    Its alumni have emerged as flourishing leaders within the church, serving as coordinators, sub-coordinators, and MBSI faculty members. Furthermore, graduates have established <span className="font-semibold text-blue-900">numerous churches across the United States, Canada, and Latin America</span>.
+                  </p>
+                  <p className="text-gray-700 leading-relaxed">
+                    In 2020, the school rebranded to <span className="font-semibold">Maranatha Bible School International</span> to reflect its ever-expanding global mission.
+                  </p>
+                </div>
+                <div className="mt-10 lg:mt-0 grid grid-cols-2 gap-3">
+                  <div className="aspect-[3/4] overflow-hidden rounded-lg col-span-2">
+                    <img
+                      src="https://images.mbsina.org/641192777_1455506433038547_6362646209918826261_n.jpg"
+                      alt="MBSI North America"
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
 
             <div className="mb-20">
               <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Major Milestones</h3>
-              <div className="max-w-4xl mx-auto">
+              <div className="max-w-5xl mx-auto">
                 <div className="space-y-8">
-                  <div className="flex gap-6">
+                  <div className="flex gap-6 items-start">
                     <div className="flex-shrink-0">
                       <div className="w-20 h-20 bg-blue-900 rounded-full flex items-center justify-center">
                         <span className="text-white font-bold text-lg">1975</span>
@@ -122,7 +154,7 @@ export default function AboutPage() {
                     </div>
                   </div>
 
-                  <div className="flex gap-6">
+                  <div className="flex gap-6 items-start">
                     <div className="flex-shrink-0">
                       <div className="w-20 h-20 bg-amber-500 rounded-full flex items-center justify-center">
                         <span className="text-white font-bold text-lg">1997</span>
@@ -134,7 +166,7 @@ export default function AboutPage() {
                     </div>
                   </div>
 
-                  <div className="flex gap-6">
+                  <div className="flex gap-6 items-start">
                     <div className="flex-shrink-0">
                       <div className="w-20 h-20 bg-blue-900 rounded-full flex items-center justify-center">
                         <span className="text-white font-bold text-lg">2020</span>
@@ -146,7 +178,7 @@ export default function AboutPage() {
                     </div>
                   </div>
 
-                  <div className="flex gap-6">
+                  <div className="flex gap-6 items-start">
                     <div className="flex-shrink-0">
                       <div className="w-20 h-20 bg-amber-500 rounded-full flex items-center justify-center">
                         <span className="text-white font-bold text-lg">2021</span>
@@ -156,9 +188,16 @@ export default function AboutPage() {
                       <h4 className="text-lg font-bold text-gray-900 mb-2">Campus Inauguration</h4>
                       <p className="text-gray-600">Official campus opened: Apostle Arsenio T. Ferriol Global Missionary Center with modern amenities.</p>
                     </div>
+                    <div className="hidden sm:block flex-shrink-0 w-32 h-24 overflow-hidden rounded-lg">
+                      <img
+                        src="https://images.mbsina.org/637769863_1455507136371810_6263204516673870441_n.jpg"
+                        alt="Campus 2021"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
                   </div>
 
-                  <div className="flex gap-6">
+                  <div className="flex gap-6 items-start">
                     <div className="flex-shrink-0">
                       <div className="w-20 h-20 bg-blue-900 rounded-full flex items-center justify-center">
                         <span className="text-white font-bold text-lg">2024</span>
@@ -170,7 +209,7 @@ export default function AboutPage() {
                     </div>
                   </div>
 
-                  <div className="flex gap-6">
+                  <div className="flex gap-6 items-start">
                     <div className="flex-shrink-0">
                       <div className="w-20 h-20 bg-amber-500 rounded-full flex items-center justify-center">
                         <span className="text-white font-bold text-lg">2026</span>
@@ -179,6 +218,13 @@ export default function AboutPage() {
                     <div className="flex-1 pt-2">
                       <h4 className="text-lg font-bold text-gray-900 mb-2">50th Anniversary</h4>
                       <p className="text-gray-600">Celebrating 50 years of ministry with the 15th batch of graduates.</p>
+                    </div>
+                    <div className="hidden sm:block flex-shrink-0 w-32 h-24 overflow-hidden rounded-lg">
+                      <img
+                        src="https://images.mbsina.org/15th%20graduates/641407618_1457085176214006_8337787100156009729_n.jpg"
+                        alt="15th Batch 2026"
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                   </div>
                 </div>
@@ -209,6 +255,33 @@ export default function AboutPage() {
                   Called, Consecrated, Competent for the End-Time Mission - preparing stewards to proclaim God's word globally.
                 </p>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-10">
+              <h2 className="text-sm font-semibold text-blue-900 tracking-wide uppercase mb-3">Campus Life</h2>
+              <p className="text-2xl font-bold text-gray-900">Life at MBSI North America</p>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+              {[
+                'https://images.mbsina.org/637838964_1455513643037826_8697834871975361149_n.jpg',
+                'https://images.mbsina.org/637848694_1455513696371154_8778760080235421395_n.jpg',
+                'https://images.mbsina.org/639147750_1455513609704496_1534814447602031335_n.jpg',
+                'https://images.mbsina.org/637789203_1455513483037842_949561862806831416_n.jpg',
+                'https://images.mbsina.org/641467736_1455506976371826_6639366107527773460_n.jpg',
+                'https://images.mbsina.org/637766449_1455513386371185_3451572275493343593_n.jpg',
+              ].map((src, i) => (
+                <div key={i} className="aspect-square overflow-hidden rounded-lg">
+                  <img
+                    src={src}
+                    alt={`Campus life ${i + 1}`}
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -246,7 +319,7 @@ export default function AboutPage() {
                 alt="MBSI Logo"
                 width={48}
                 height={48}
-                              />
+              />
               <div>
                 <span className="font-bold">MBSI North America Extension</span>
                 <p className="text-xs text-gray-400">Since 1975</p>

@@ -41,8 +41,16 @@ export default function ProgramsPage() {
       </header>
 
       <main>
-        <section className="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="relative text-white py-24 overflow-hidden">
+          <div className="absolute inset-0">
+            <img
+              src="https://images.mbsina.org/field-trips/526327071_1286266479962544_8896777357247365772_n.jpg"
+              alt="Ministry Field Training"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-blue-900/82 to-slate-900/90"></div>
+          </div>
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Link href="/" className="inline-flex items-center text-blue-200 hover:text-white mb-8 text-sm">
               <ArrowLeftIcon className="w-4 h-4 mr-2" />
               Back to Home
@@ -219,6 +227,34 @@ export default function ProgramsPage() {
                     </p>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            <div className="mb-20">
+              <div className="text-center mb-10">
+                <h3 className="text-sm font-semibold text-blue-900 tracking-wide uppercase mb-3">Beyond the Classroom</h3>
+                <p className="text-2xl font-bold text-gray-900 mb-3">Field Trips & Ministry Experience</p>
+                <p className="text-gray-600 max-w-2xl mx-auto">Students engage in hands-on ministry experiences, field trips, and community outreach as part of their practical training.</p>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                {[
+                  'https://images.mbsina.org/field-trips/525653870_1286266496629209_4904426453360321680_n.jpg',
+                  'https://images.mbsina.org/field-trips/525968488_1286266506629208_4766426678622010466_n.jpg',
+                  'https://images.mbsina.org/field-trips/525988956_1286266499962542_5561526312781034169_n.jpg',
+                  'https://images.mbsina.org/field-trips/526202139_1286266493295876_387009815077524879_n.jpg',
+                  'https://images.mbsina.org/field-trips/526327071_1286266479962544_8896777357247365772_n.jpg',
+                  'https://images.mbsina.org/field-trips/526501274_1286266439962548_6598842893467437962_n.jpg',
+                  'https://images.mbsina.org/field-trips/526616942_1286266503295875_572327462169022771_n.jpg',
+                  'https://images.mbsina.org/526386434_1286266486629210_1965519544591225035_n.jpg',
+                ].map((src, i) => (
+                  <div key={i} className="aspect-square overflow-hidden rounded-lg">
+                    <img
+                      src={src}
+                      alt={`Field trip ${i + 1}`}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                ))}
               </div>
             </div>
 
