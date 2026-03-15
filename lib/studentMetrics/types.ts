@@ -2,6 +2,14 @@ export interface StudentMetricsStudent {
   id: string;
   full_name: string;
   date_entered: string | null;
+  academics: string;
+  spirituality: string;
+  jobspec_ministries: string;
+  ministerial_proficiency: string;
+  character_summary: string;
+  achievements_ranking: string;
+  faculty_recommendation: string;
+  faculty_remarks: string;
   created_by: string | null;
   created_at: string;
   updated_at: string;
@@ -24,6 +32,95 @@ export interface StudentMetricsRecord {
   caroling_amount: number;
   caroling_leader: boolean;
   notes: string;
+  created_by: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface StudentEvaluation {
+  id: string;
+  student_id: string;
+  evaluation_date: string;
+  evaluator_name: string;
+  church_assignment: string;
+  scope_of_evaluation: string;
+  year_level: string;
+
+  // A. Character Development
+  char_loyal_respectful: number | null;
+  char_adaptable_resilient: number | null;
+  char_creative_resourceful: number | null;
+  char_empathic_compassionate: number | null;
+  char_neat_proper: number | null;
+  char_comments: string;
+
+  // B. Spiritual Development
+  spirit_biblical_proficiency: number | null;
+  spirit_doctrinal_competency: number | null;
+  spirit_depth_in_prayer: number | null;
+  spirit_soul_winning: number | null;
+  spirit_financial_stewardship: number | null;
+  spirit_guests: number;
+  spirit_baptisms: number;
+  spirit_converts_retention: number;
+  spirit_thanksgiving_amount: number;
+  spirit_caroling_amount: number;
+  spirit_evangelism_offering: number;
+  spirit_missionary_offering: number;
+  spirit_comments: string;
+
+  // C. Work Performance
+  work_accountable_responsible: number | null;
+  work_productivity_excellence: number | null;
+  work_initiative: number | null;
+  work_cooperative: number | null;
+  work_timely: number | null;
+  work_comments: string;
+
+  // D. Skill Development
+  skill_leadership: number | null;
+  skill_interpersonal: number | null;
+  skill_communication: number | null;
+  skill_organizational: number | null;
+  skill_technical: number | null;
+  skill_comments: string;
+
+  // E. Healthy Behaviors
+  health_physical: number | null;
+  health_emotional: number | null;
+  health_mental: number | null;
+  health_relational: number | null;
+  health_comments: string;
+
+  // F. Misconduct
+  misconduct_gross_negligence: boolean;
+  misconduct_romantic_relationship: boolean;
+  misconduct_laziness: boolean;
+  misconduct_tampering_records: boolean;
+  misconduct_mishandling_money: boolean;
+  misconduct_defiance: boolean;
+  misconduct_others: string;
+  misconduct_description: string;
+
+  created_by: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PastorRecommendation {
+  id: string;
+  student_id: string;
+  pastor_name: string;
+  scope_of_evaluation: string;
+  year_level: string;
+  evaluation_date: string;
+  character_description: string;
+  offense_committed: string;
+  disobedience_patterns: string;
+  character_strengths: string;
+  jobspec_rating: string;
+  jobspec_description: string;
+  additional_notes: string;
   created_by: string | null;
   created_at: string;
   updated_at: string;
@@ -63,6 +160,14 @@ export const YEAR_LEVELS = [
   'Other',
 ];
 
+export const RATING_LABELS: Record<number, string> = {
+  1: 'Very Poor',
+  2: 'Poor',
+  3: 'Good',
+  4: 'Very Good',
+  5: 'Excellent',
+};
+
 export function computeTotals(records: StudentMetricsRecord[]): StudentTotals {
   return records.reduce(
     (acc, r) => ({
@@ -94,4 +199,33 @@ export function computeTotals(records: StudentMetricsRecord[]): StudentTotals {
       years_count: 0,
     }
   );
+}
+
+export function computeEvalScore(ev: StudentEvaluation): { total: number; max: number; pct: number; sectionScores: Record<string, number> } {
+  const charItems = [ev.char_loyal_respectful, ev.char_adaptable_resilient, ev.char_creative_resourceful, ev.char_empathic_compassionate, ev.char_neat_proper];
+  const spiritItems = [ev.spirit_biblical_proficiency, ev.spirit_doctrinal_competency, ev.spirit_depth_in_prayer, ev.spirit_soul_winning, ev.spirit_financial_stewardship];
+  const workItems = [ev.work_accountable_responsible, ev.work_productivity_excellence, ev.work_initiative, ev.work_cooperative, ev.work_timely];
+  const skillItems = [ev.skill_leadership, ev.skill_interpersonal, ev.skill_communication, ev.skill_organizational, ev.skill_technical];
+  const healthItems = [ev.health_physical, ev.health_emotional, ev.health_mental, ev.health_relational];
+
+  const avg = (items: (number | null)[]) => {
+    const valid = items.filter((v) => v !== null) as number[];
+    return valid.length > 0 ? valid.reduce((a, b) => a + b, 0) / valid.length : 0;
+  };
+
+  const sectionScores = {
+    Character: avg(charItems),
+    Spiritual: avg(spiritItems),
+    'Work Performance': avg(workItems),
+    'Skill Development': avg(skillItems),
+    'Healthy Behaviors': avg(healthItems),
+  };
+
+  const allItems = [...charItems, ...spiritItems, ...workItems, ...skillItems, ...healthItems];
+  const validItems = allItems.filter((v) => v !== null) as number[];
+  const total = validItems.reduce((a, b) => a + b, 0);
+  const max = validItems.length * 5;
+  const pct = max > 0 ? Math.round((total / max) * 100) : 0;
+
+  return { total, max, pct, sectionScores };
 }
