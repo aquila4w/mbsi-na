@@ -64,7 +64,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <div className="flex items-center space-x-8">
               <Link href="/dashboard" className="flex items-center space-x-3">
                 <Image
-                  src="/mbsi_logo.png"
+                  src="/mbsi_logo copy.png"
                   alt="MBSI Logo"
                   width={40}
                   height={40}

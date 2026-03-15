@@ -60,7 +60,7 @@ export default function RegisterPage() {
         <div className="w-full max-w-md">
           <Link href="/" className="inline-flex items-center space-x-3 mb-12">
             <Image
-              src="/mbsi_logo.png"
+              src="/mbsi_logo copy.png"
               alt="MBSI Logo"
               width={48}
               height={48}
