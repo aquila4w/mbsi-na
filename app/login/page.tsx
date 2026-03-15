@@ -36,7 +36,7 @@ export default function LoginPage() {
         <div className="w-full max-w-md">
           <Link href="/" className="inline-flex items-center space-x-3 mb-12">
             <Image
-              src="/mbsi_logo.png"
+              src="/mbsi-logo.png"
               alt="MBSI Logo"
               width={48}
               height={48}

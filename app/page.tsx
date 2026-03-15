@@ -26,7 +26,7 @@ export default function Home() {
               <div className="flex-shrink-0">
                 <Link href="/" className="flex items-center space-x-3">
                   <Image
-                    src="/mbsi_logo.png"
+                    src="/mbsi-logo.png"
                     alt="MBSI Logo"
                     width={60}
                     height={60}
@@ -110,7 +110,7 @@ export default function Home() {
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-blue-500/20 blur-3xl"></div>
                   <Image
-                    src="/mbsi_logo.png"
+                    src="/mbsi-logo.png"
                     alt="MBSI Logo"
                     width={400}
                     height={400}
@@ -362,7 +362,7 @@ export default function Home() {
             <div className="md:col-span-2">
               <div className="flex items-center space-x-3 mb-6">
                 <Image
-                  src="/mbsi_logo.png"
+                  src="/mbsi-logo.png"
                   alt="MBSI Logo"
                   width={48}
                   height={48}
