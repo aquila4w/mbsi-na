@@ -12,7 +12,7 @@ export default function ProgramsPage() {
               <div className="flex-shrink-0">
                 <Link href="/" className="flex items-center space-x-3">
                   <Image
-                    src="/mbsi_logo copy.png"
+                    src="/mbsi_logo.png"
                     alt="MBSI Logo"
                     width={60}
                     height={60}
@@ -342,7 +342,7 @@ export default function ProgramsPage() {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-3 mb-4 md:mb-0">
               <Image
-                src="/mbsi_logo copy.png"
+                src="/mbsi_logo.png"
                 alt="MBSI Logo"
                 width={48}
                 height={48}
