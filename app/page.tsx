@@ -495,8 +495,8 @@ export default function Home() {
         </section>
 
         <ParallaxSection
-          src="https://images.mbsina.org/637766449_1455513386371185_3451572275493343593_n.jpg"
-          overlayClass="bg-gradient-to-r from-blue-900/92 via-slate-900/88 to-blue-900/92"
+          src="https://images.mbsina.org/637838964_1455513643037826_8697834871975361149_n.jpg"
+          overlayClass="bg-gradient-to-b from-slate-950/96 via-blue-950/94 to-slate-950/96"
           className="py-20"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -1,6 +1,37 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeftIcon, AcademicCapIcon, StarIcon } from '@heroicons/react/24/outline';
+import { useEffect, useRef, useState } from 'react';
+
+function ParallaxHeader({ src, children }: { src: string; children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [offset, setOffset] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!ref.current) return;
+      const rect = ref.current.getBoundingClientRect();
+      const viewportCenter = window.innerHeight / 2;
+      const sectionCenter = rect.top + rect.height / 2;
+      setOffset((sectionCenter - viewportCenter) * 0.28);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <section ref={ref} className="relative text-white py-24 overflow-hidden">
+      <div className="absolute inset-0" style={{ transform: `translateY(${offset}px)`, willChange: 'transform', top: '-15%', bottom: '-15%' }}>
+        <img src={src} alt="" className="w-full h-full object-cover" aria-hidden="true" />
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/95 via-blue-950/92 to-slate-950/95"></div>
+      <div className="relative">{children}</div>
+    </section>
+  );
+}
 
 const facultyPhotos = [
   'https://images.mbsina.org/faculty/526757433_1286062569982935_3464660697682852645_n.jpg',
@@ -57,16 +88,8 @@ export default function FacultyPage() {
       </header>
 
       <main>
-        <section className="relative text-white py-24 overflow-hidden">
-          <div className="absolute inset-0">
-            <img
-              src="https://images.mbsina.org/faculty/640604337_1455513549704502_8648768256059103848_n.jpg"
-              alt="Faculty"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-blue-900/82 to-slate-900/90"></div>
-          </div>
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <ParallaxHeader src="https://images.mbsina.org/faculty/640604337_1455513549704502_8648768256059103848_n.jpg">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Link href="/" className="inline-flex items-center text-blue-200 hover:text-white mb-8 text-sm">
               <ArrowLeftIcon className="w-4 h-4 mr-2" />
               Back to Home
@@ -76,7 +99,7 @@ export default function FacultyPage() {
               Guided by apostolic vision and Spirit-led teaching
             </p>
           </div>
-        </section>
+        </ParallaxHeader>
 
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -91,39 +114,10 @@ export default function FacultyPage() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-8 mb-20 max-w-5xl mx-auto">
-              <div className="bg-gradient-to-br from-blue-900 to-slate-900 text-white rounded-lg shadow-xl overflow-hidden">
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src="https://images.mbsina.org/faculty/526757433_1286062569982935_3464660697682852645_n.jpg"
-                    alt="Apostle Jonathan S. Ferriol"
-                    className="w-full h-full object-cover object-top"
-                  />
-                </div>
-                <div className="p-8">
-                  <div className="flex items-center mb-4">
-                    <StarIcon className="w-5 h-5 text-amber-400 mr-2" />
-                    <span className="text-sm text-amber-300 font-semibold">CHANCELLOR</span>
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4">Apostle Jonathan S. Ferriol</h3>
-                  <p className="text-blue-100 leading-relaxed mb-4">
-                    As the current Chancellor of MBSI, Apostle Jonathan S. Ferriol carries forward the vision established by his father. He co-founded the North America Extension in 1997 alongside Presbyter Marites Ferriol, beginning with just a handful of students.
-                  </p>
-                  <p className="text-blue-100 leading-relaxed">
-                    Under his leadership, MBSI North America has grown to become the largest of the four global extensions, graduating 14 batches of ministers and establishing churches across the United States, Canada, and Latin America.
-                  </p>
-                  <div className="mt-6 pt-6 border-t border-white/20">
-                    <p className="text-sm text-amber-300 font-semibold">Legacy & Vision</p>
-                    <p className="text-sm text-blue-100 mt-2">
-                      Continuing the apostolic mandate to train approved ministers for the end-time harvest
-                    </p>
-                  </div>
-                </div>
-              </div>
-
               <div className="bg-gradient-to-br from-slate-700 to-slate-900 text-white rounded-lg shadow-xl border-2 border-amber-500 overflow-hidden">
                 <div className="aspect-[4/3] overflow-hidden">
                   <img
-                    src="https://images.mbsina.org/faculty/547209982_1329762812279577_7361447926141724261_n.jpg"
+                    src="https://images.mbsina.org/faculty/471192025_897106575935494_7653902803360758079_n.jpg"
                     alt="Apostle Arsenio T. Ferriol"
                     className="w-full h-full object-cover object-top"
                   />
@@ -153,6 +147,35 @@ export default function FacultyPage() {
                   </div>
                 </div>
               </div>
+
+              <div className="bg-gradient-to-br from-blue-900 to-slate-900 text-white rounded-lg shadow-xl overflow-hidden">
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img
+                    src="https://images.mbsina.org/faculty/526757433_1286062569982935_3464660697682852645_n.jpg"
+                    alt="Apostle Jonathan S. Ferriol"
+                    className="w-full h-full object-cover object-top"
+                  />
+                </div>
+                <div className="p-8">
+                  <div className="flex items-center mb-4">
+                    <StarIcon className="w-5 h-5 text-amber-400 mr-2" />
+                    <span className="text-sm text-amber-300 font-semibold">CHANCELLOR</span>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4">Apostle Jonathan S. Ferriol</h3>
+                  <p className="text-blue-100 leading-relaxed mb-4">
+                    As the current Chancellor of MBSI, Apostle Jonathan S. Ferriol carries forward the vision established by his father. He co-founded the North America Extension in 1997 alongside Presbyter Marites Ferriol, beginning with just a handful of students.
+                  </p>
+                  <p className="text-blue-100 leading-relaxed">
+                    Under his leadership, MBSI North America has grown to become the largest of the four global extensions, graduating 14 batches of ministers and establishing churches across the United States, Canada, and Latin America.
+                  </p>
+                  <div className="mt-6 pt-6 border-t border-white/20">
+                    <p className="text-sm text-amber-300 font-semibold">Legacy & Vision</p>
+                    <p className="text-sm text-blue-100 mt-2">
+                      Continuing the apostolic mandate to train approved ministers for the end-time harvest
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="max-w-5xl mx-auto mb-20">
@@ -161,7 +184,7 @@ export default function FacultyPage() {
                 <div className="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 rounded-lg overflow-hidden">
                   <div className="aspect-[16/9] overflow-hidden">
                     <img
-                      src="https://images.mbsina.org/faculty/549313771_1329762488946276_7553027437963602177_n.jpg"
+                      src="https://images.mbsina.org/faculty/477708379_926989566280528_6210590653100352050_n.jpg"
                       alt="Evangelist Leticia S. Ferriol"
                       className="w-full h-full object-cover object-top"
                     />
@@ -202,7 +225,7 @@ export default function FacultyPage() {
                 <div className="bg-gradient-to-br from-amber-50 to-white border-2 border-amber-200 rounded-lg overflow-hidden">
                   <div className="aspect-[16/9] overflow-hidden">
                     <img
-                      src="https://images.mbsina.org/faculty/549563996_1329762738946251_8078647914591332503_n.jpg"
+                      src="https://images.mbsina.org/faculty/475144760_917400737239411_6377940372261510392_n.jpg"
                       alt="Presbyter Marites M. Ferriol"
                       className="w-full h-full object-cover object-top"
                     />

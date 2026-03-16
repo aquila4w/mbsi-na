@@ -1,6 +1,37 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeftIcon, HeartIcon, AcademicCapIcon, CheckCircleIcon, ClockIcon, BookOpenIcon } from '@heroicons/react/24/outline';
+import { useEffect, useRef, useState } from 'react';
+
+function ParallaxHeader({ src, children }: { src: string; children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [offset, setOffset] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!ref.current) return;
+      const rect = ref.current.getBoundingClientRect();
+      const viewportCenter = window.innerHeight / 2;
+      const sectionCenter = rect.top + rect.height / 2;
+      setOffset((sectionCenter - viewportCenter) * 0.28);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div ref={ref} className="relative text-white py-24 overflow-hidden">
+      <div className="absolute inset-0" style={{ transform: `translateY(${offset}px)`, willChange: 'transform', top: '-15%', bottom: '-15%' }}>
+        <img src={src} alt="" className="w-full h-full object-cover" aria-hidden="true" />
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/95 via-blue-950/92 to-slate-950/95"></div>
+      <div className="relative">{children}</div>
+    </div>
+  );
+}
 
 export default function ProgramsPage() {
   return (
@@ -16,7 +47,7 @@ export default function ProgramsPage() {
                     alt="MBSI Logo"
                     width={60}
                     height={60}
-                                      />
+                  />
                   <div>
                     <h1 className="text-lg font-bold text-gray-900 leading-tight">MBSI</h1>
                     <p className="text-xs text-gray-600">North America Extension</p>
@@ -41,16 +72,8 @@ export default function ProgramsPage() {
       </header>
 
       <main>
-        <section className="relative text-white py-24 overflow-hidden">
-          <div className="absolute inset-0">
-            <img
-              src="https://images.mbsina.org/field-trips/526327071_1286266479962544_8896777357247365772_n.jpg"
-              alt="Ministry Field Training"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-blue-900/82 to-slate-900/90"></div>
-          </div>
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <ParallaxHeader src="https://images.mbsina.org/field-trips/526327071_1286266479962544_8896777357247365772_n.jpg">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Link href="/" className="inline-flex items-center text-blue-200 hover:text-white mb-8 text-sm">
               <ArrowLeftIcon className="w-4 h-4 mr-2" />
               Back to Home
@@ -63,7 +86,7 @@ export default function ProgramsPage() {
               LTMMTL - Love The Ministry More Than Life
             </p>
           </div>
-        </section>
+        </ParallaxHeader>
 
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -247,12 +270,18 @@ export default function ProgramsPage() {
                   'https://images.mbsina.org/field-trips/526616942_1286266503295875_572327462169022771_n.jpg',
                   'https://images.mbsina.org/526386434_1286266486629210_1965519544591225035_n.jpg',
                 ].map((src, i) => (
-                  <div key={i} className="aspect-square overflow-hidden rounded-lg">
+                  <div
+                    key={i}
+                    className="aspect-square overflow-hidden rounded-lg group relative"
+                    style={{ border: '2px solid rgba(245,158,11,0.3)', boxShadow: '0 2px 12px rgba(0,0,0,0.1)' }}
+                  >
                     <img
                       src={src}
                       alt={`Field trip ${i + 1}`}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-110 group-hover:brightness-110 transition-all duration-600"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-blue-900/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left pointer-events-none"></div>
                   </div>
                 ))}
               </div>
@@ -382,10 +411,10 @@ export default function ProgramsPage() {
                 alt="MBSI Logo"
                 width={48}
                 height={48}
-                              />
+              />
               <div>
                 <span className="font-bold">MBSI North America Extension</span>
-                <p className="text-xs text-gray-400">Training Ministers Since 1975</p>
+                <p className="text-xs text-gray-400">Training Ministers Since 1997</p>
               </div>
             </div>
             <p className="text-sm text-gray-500">

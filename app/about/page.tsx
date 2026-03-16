@@ -92,7 +92,7 @@ export default function AboutPage() {
       <main>
         <ParallaxBg
           src="https://images.mbsina.org/637883399_1455506386371885_2410036573811370447_n.jpg"
-          overlayClass="bg-gradient-to-br from-slate-900/88 via-blue-900/80 to-slate-900/88"
+          overlayClass="bg-gradient-to-b from-slate-950/95 via-slate-900/92 to-slate-950/95"
           className="text-white py-28"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -191,39 +191,85 @@ export default function AboutPage() {
             </div>
 
             <div className="mb-20">
-              <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Major Milestones</h3>
-              <div className="max-w-5xl mx-auto">
-                <div className="space-y-8">
-                  {[
-                    { year: '1975', color: 'bg-blue-900', title: 'Foundation', desc: 'MBSI founded by Apostle Arsenio T. Ferriol as the ministerial training arm of PMCC 4th Watch.' },
-                    { year: '1997', color: 'bg-amber-500', title: 'North America Extension Formed', desc: 'Apostle Jonathan S. Ferriol and Presbyter Marites Ferriol establish the North America Extension.' },
-                    { year: '2020', color: 'bg-blue-900', title: 'Rebranding', desc: 'School rebrands to Maranatha Bible School International to reflect global mission expansion.' },
-                    { year: '2021', color: 'bg-amber-500', title: 'Campus Inauguration', desc: 'Official campus opened: Apostle Arsenio T. Ferriol Global Missionary Center with modern amenities.', img: 'https://images.mbsina.org/637769863_1455507136371810_6263204516673870441_n.jpg' },
-                    { year: '2024', color: 'bg-blue-900', title: 'Leadership Transition', desc: 'Following the passing of Chancellor Emeritus Apostle Arsenio T. Ferriol, Apostle Jonathan S. Ferriol becomes MBSI Chancellor.' },
-                    { year: '2026', color: 'bg-amber-500', title: 'Three Decades & 15th Batch', desc: 'Celebrating three decades of North America ministry with the 15th batch of graduates.', img: 'https://images.mbsina.org/641303403_1456153922973798_4837987518281799659_n.jpg' },
-                  ].map((item, i) => (
-                    <div key={i} className="flex gap-6 items-start">
-                      <div className="flex-shrink-0">
-                        <div className={`w-20 h-20 ${item.color} rounded-full flex items-center justify-center shadow-lg`}>
-                          <span className="text-white font-bold text-base">{item.year}</span>
-                        </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-10 text-center">Major Milestones</h3>
+              <div className="max-w-5xl mx-auto space-y-8">
+                {[
+                  {
+                    year: '1975', color: 'bg-blue-900', title: 'Foundation',
+                    desc: 'MBSI founded by Apostle Arsenio T. Ferriol as the ministerial training arm of PMCC 4th Watch.',
+                    imgs: [
+                      'https://images.mbsina.org/faculty/471192025_897106575935494_7653902803360758079_n.jpg',
+                      'https://images.mbsina.org/faculty/477708379_926989566280528_6210590653100352050_n.jpg',
+                    ],
+                  },
+                  {
+                    year: '1997', color: 'bg-amber-500', title: 'North America Extension Formed',
+                    desc: 'Apostle Jonathan S. Ferriol and Presbyter Marites Ferriol establish the North America Extension with only a handful of students.',
+                    imgs: [
+                      'https://images.mbsina.org/faculty/526757433_1286062569982935_3464660697682852645_n.jpg',
+                      'https://images.mbsina.org/faculty/475144760_917400737239411_6377940372261510392_n.jpg',
+                    ],
+                  },
+                  {
+                    year: '2020', color: 'bg-blue-900', title: 'Rebranding',
+                    desc: 'School rebrands to Maranatha Bible School International to reflect its ever-expanding global mission across four continents.',
+                    imgs: [
+                      'https://images.mbsina.org/641192777_1455506433038547_6362646209918826261_n.jpg',
+                      'https://images.mbsina.org/637655617_1455507183038472_6231199999404545892_n.jpg',
+                    ],
+                  },
+                  {
+                    year: '2021', color: 'bg-amber-500', title: 'Campus Inauguration',
+                    desc: 'Official campus opened: Apostle Arsenio T. Ferriol Global Missionary Center — with modern classrooms, gym, library, and full student facilities.',
+                    imgs: [
+                      'https://images.mbsina.org/637769863_1455507136371810_6263204516673870441_n.jpg',
+                      'https://images.mbsina.org/gym/535553707_1302720071650518_4695658712920848632_n.jpg',
+                    ],
+                  },
+                  {
+                    year: '2024', color: 'bg-blue-900', title: 'Leadership Transition',
+                    desc: 'Following the passing of Chancellor Emeritus Apostle Arsenio T. Ferriol, Apostle Jonathan S. Ferriol is installed as MBSI Chancellor.',
+                    imgs: [
+                      'https://images.mbsina.org/faculty/526757433_1286062569982935_3464660697682852645_n.jpg',
+                      'https://images.mbsina.org/482832080_4231049790514712_895923824956936336_n.jpg',
+                    ],
+                  },
+                  {
+                    year: '2026', color: 'bg-amber-500', title: 'Three Decades & 15th Batch',
+                    desc: 'Celebrating three decades of North America ministry with the graduation of the 15th batch of full-fledged ministers.',
+                    imgs: [
+                      'https://images.mbsina.org/641303403_1456153922973798_4837987518281799659_n.jpg',
+                      'https://images.mbsina.org/641316266_1456153892973801_3874141486794394358_n.jpg',
+                    ],
+                  },
+                ].map((item, i) => (
+                  <div key={i} className="flex gap-5 items-start bg-white rounded-xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+                    <div className="flex-shrink-0">
+                      <div className={`w-16 h-16 ${item.color} rounded-full flex items-center justify-center shadow-lg`}>
+                        <span className="text-white font-bold text-sm leading-tight text-center">{item.year}</span>
                       </div>
-                      <div className="flex-1 pt-2">
-                        <h4 className="text-lg font-bold text-gray-900 mb-2">{item.title}</h4>
-                        <p className="text-gray-600">{item.desc}</p>
-                      </div>
-                      {item.img && (
-                        <div className="hidden sm:block flex-shrink-0 w-32 h-24 overflow-hidden rounded-lg" style={{ border: '2px solid rgba(245,158,11,0.3)', boxShadow: '0 2px 12px rgba(0,0,0,0.12)' }}>
+                    </div>
+                    <div className="flex-1 min-w-0 pt-1">
+                      <h4 className="text-lg font-bold text-gray-900 mb-1">{item.title}</h4>
+                      <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+                    </div>
+                    <div className="hidden sm:flex flex-shrink-0 gap-2">
+                      {item.imgs.map((src, j) => (
+                        <div
+                          key={j}
+                          className="w-28 h-20 overflow-hidden rounded-lg group"
+                          style={{ border: '2px solid rgba(245,158,11,0.35)', boxShadow: '0 2px 10px rgba(0,0,0,0.13)' }}
+                        >
                           <img
-                            src={item.img}
+                            src={src}
                             alt={item.title}
-                            className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                            className="w-full h-full object-cover object-top group-hover:scale-110 group-hover:brightness-110 transition-all duration-500"
                           />
                         </div>
-                      )}
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
 
