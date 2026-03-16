@@ -9,6 +9,10 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'Campus LMS - Learning Management System',
   description: 'A comprehensive learning management system for educational institutions',
+  icons: {
+    icon: '/mbsi-logo.png',
+    apple: '/mbsi-logo.png',
+  },
   openGraph: {
     images: [
       {
