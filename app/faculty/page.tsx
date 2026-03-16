@@ -128,7 +128,7 @@ export default function FacultyPage() {
                     <span className="text-sm text-amber-300 font-semibold">CHANCELLOR EMERITUS</span>
                   </div>
                   <h3 className="text-2xl font-bold">Apostle Arsenio T. Ferriol</h3>
-                  <p className="text-sm text-gray-400 mb-4">1924 - 2024</p>
+                  <p className="text-sm text-gray-400 mb-4">1936 - 2024</p>
                   <p className="text-gray-200 leading-relaxed mb-4">
                     The Goodman of the House and founder of MBSI in 1975. Apostle Arsenio T. Ferriol established the school as the ministerial training arm of the Pentecostal Missionary Church of Christ (4th Watch).
                   </p>
