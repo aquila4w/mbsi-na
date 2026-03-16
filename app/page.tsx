@@ -17,7 +17,7 @@ import {
 import { useState, useEffect, useRef } from 'react';
 
 const galleryImages = [
-  { src: 'https://images.mbsina.org/641303403_1456153922973798_4837987518281799659_n.jpg', alt: '15th Batch Graduation' },
+  { src: 'https://images.mbsina.org/field-trips/525653870_1286266496629209_4904426453360321680_n.jpg', alt: 'Field Trip' },
   { src: 'https://images.mbsina.org/641316266_1456153892973801_3874141486794394358_n.jpg', alt: 'Graduation Ceremony' },
   { src: 'https://images.mbsina.org/640398137_1456153876307136_8509879117469714915_n.jpg', alt: 'Graduate Group Photo' },
   { src: 'https://images.mbsina.org/641388672_1456153836307140_2469215302247896029_n.jpg', alt: 'Graduation Day' },
