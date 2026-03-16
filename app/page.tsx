@@ -117,7 +117,7 @@ function ParallaxSection({ children, src, overlayClass, className }: { children:
   return (
     <section ref={ref} className={`relative overflow-hidden ${className || ''}`}>
       <div className="absolute inset-0" style={{ transform: `translateY(${offset}px)`, willChange: 'transform', top: '-15%', bottom: '-15%' }}>
-        <img src={src} alt="" className="w-full h-full object-cover" aria-hidden="true" />
+        <img src={src} alt="" className="w-full h-full object-cover object-top" aria-hidden="true" />
       </div>
       <div className={`absolute inset-0 ${overlayClass || 'bg-gradient-to-r from-blue-900/92 via-slate-900/88 to-blue-900/92'}`}></div>
       <div className="relative">{children}</div>
@@ -495,8 +495,8 @@ export default function Home() {
         </section>
 
         <ParallaxSection
-          src="https://images.mbsina.org/637838964_1455513643037826_8697834871975361149_n.jpg"
-          overlayClass="bg-gradient-to-b from-slate-950/96 via-blue-950/94 to-slate-950/96"
+          src="https://images.mbsina.org/641303403_1456153922973798_4837987518281799659_n.jpg"
+          overlayClass="bg-gradient-to-b from-slate-950/95 via-blue-950/90 to-slate-950/95"
           className="py-20"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
