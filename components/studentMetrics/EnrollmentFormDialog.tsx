@@ -78,7 +78,7 @@ export default function EnrollmentFormDialog({ open, onClose, onSubmit, isReEntr
             >
               <option value="">Select level</option>
               <optgroup label="AMP Internship">
-                {levels.filter((l) => l.tier === 'amp_internhip').map((l) => (
+                {levels.filter((l) => l.tier === 'amp_internship').map((l) => (
                   <option key={l.id} value={l.id}>{l.display_name}</option>
                 ))}
               </optgroup>
