@@ -10,6 +10,9 @@ export interface StudentMetricsStudent {
   achievements_ranking: string;
   faculty_recommendation: string;
   faculty_remarks: string;
+  current_level_id: string | null;
+  current_status: string;
+  graduated_at: string | null;
   created_by: string | null;
   created_at: string;
   updated_at: string;
