@@ -18,6 +18,7 @@ import {
   EyeIcon,
   ChartBarIcon,
   ClipboardDocumentCheckIcon,
+  BeakerIcon,
 } from '@heroicons/react/24/outline';
 import { NotificationBadge } from '@/components/notifications/NotificationBadge';
 
@@ -37,6 +38,7 @@ const navigation: NavItem[] = [
   { name: 'Users', href: '/users', icon: UserGroupIcon, roles: ['admin', 'teacher'] },
   { name: 'Metrics', href: '/metrics', icon: ChartBarIcon, roles: ['admin', 'teacher', 'ta'] },
   { name: 'Advancement', href: '/advancement', icon: ClipboardDocumentCheckIcon, roles: ['admin', 'teacher', 'ta'] },
+  { name: 'Demo', href: '/admin/demo', icon: BeakerIcon, roles: ['admin'] },
   { name: 'Settings', href: '/settings', icon: Cog6ToothIcon },
 ];
 
