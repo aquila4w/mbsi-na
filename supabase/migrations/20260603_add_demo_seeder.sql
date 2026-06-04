@@ -148,8 +148,8 @@ BEGIN
     (v_asgn2_id, v_maria_id, 'The faith journey of Abraham teaches us about trusting God''s promises...', now(), 88, 'Solid analysis.', v_santos_id, now(), 'graded');
 
   -- Quiz
-  INSERT INTO quizzes (id, course_id, title, description, quiz_type, time_limit, points_possible, allowed_attempts, shuffle_answers, show_correct_answers, due_date, status, passing_score, instructions)
-  VALUES (gen_random_uuid(), v_bib101_id, 'Old Testament Quiz', 'Test your knowledge of the Old Testament', 'graded', 30, 50, 2, true, true, '2026-11-01', 'published', 70, 'Answer all questions. 30 minutes. Up to 2 attempts.') RETURNING id INTO v_quiz1_id;
+  INSERT INTO quizzes (id, course_id, title, description, quiz_type, time_limit, points_possible, allowed_attempts, shuffle_answers, show_correct_answers, due_date, status, passing_score, instructions, created_by)
+  VALUES (gen_random_uuid(), v_bib101_id, 'Old Testament Quiz', 'Test your knowledge of the Old Testament', 'graded', 30, 50, 2, true, true, '2026-11-01', 'published', 70, 'Answer all questions. 30 minutes. Up to 2 attempts.', v_santos_id) RETURNING id INTO v_quiz1_id;
 
   INSERT INTO quiz_questions (id, quiz_id, question_text, question_type, points, position, explanation) VALUES (gen_random_uuid(), v_quiz1_id, 'How many books are in the Old Testament?', 'multiple_choice', 10, 1, '39 books.') RETURNING id INTO v_q1_id;
   INSERT INTO quiz_questions (id, quiz_id, question_text, question_type, points, position, explanation) VALUES (gen_random_uuid(), v_quiz1_id, 'The first five books are called the Pentateuch.', 'true_false', 10, 2, 'Genesis through Deuteronomy.') RETURNING id INTO v_q2_id;
@@ -231,8 +231,8 @@ BEGIN
     (v_asgn3_id, v_rosa_id, 'My philosophy of ministry centers on servant leadership...', now() - interval '3 days', 90, 'Excellent integration of Scripture and personal reflection.', v_reyes_id, now() - interval '1 day', 'graded'),
     (v_asgn3_id, v_luis_id, 'I believe ministry should be grounded in love and authenticity...', now() - interval '2 days', 85, 'Good start! Expand on your discipleship approach.', v_reyes_id, now() - interval '1 day', 'graded');
 
-  INSERT INTO quizzes (id, course_id, title, description, quiz_type, time_limit, points_possible, allowed_attempts, shuffle_answers, show_correct_answers, due_date, status, passing_score, instructions)
-  VALUES (gen_random_uuid(), v_min201_id, 'Ministry Principles Quiz', 'Assess your understanding of core ministry principles', 'graded', 20, 40, 2, true, true, '2026-10-15', 'published', 60, '20 minutes. Up to 2 attempts.') RETURNING id INTO v_quiz2_id;
+  INSERT INTO quizzes (id, course_id, title, description, quiz_type, time_limit, points_possible, allowed_attempts, shuffle_answers, show_correct_answers, due_date, status, passing_score, instructions, created_by)
+  VALUES (gen_random_uuid(), v_min201_id, 'Ministry Principles Quiz', 'Assess your understanding of core ministry principles', 'graded', 20, 40, 2, true, true, '2026-10-15', 'published', 60, '20 minutes. Up to 2 attempts.', v_reyes_id) RETURNING id INTO v_quiz2_id;
 
   INSERT INTO quiz_questions (id, quiz_id, question_text, question_type, points, position) VALUES (gen_random_uuid(), v_quiz2_id, 'What is the primary characteristic of servant leadership (Mark 10:45)?', 'multiple_choice', 10, 1) RETURNING id INTO v_q6_id;
   INSERT INTO quiz_questions (id, quiz_id, question_text, question_type, points, position) VALUES (gen_random_uuid(), v_quiz2_id, 'Pastoral care only involves preaching on Sundays.', 'true_false', 10, 2) RETURNING id INTO v_q7_id;
@@ -287,8 +287,8 @@ BEGIN
   INSERT INTO assignments (id, course_id, title, description, due_date, points_possible, status, created_by) VALUES (gen_random_uuid(), v_his301_id, 'Church Fathers Research Paper', 'Research one early church father and write a 1000-word paper.', '2026-11-15', 100, 'published', v_cruz_id) RETURNING id INTO v_asgn5_id;
   INSERT INTO assignments (id, course_id, title, description, due_date, points_possible, status, created_by) VALUES (gen_random_uuid(), v_his301_id, 'Timeline Project', 'Create a visual timeline of the first 500 years of church history.', '2026-12-10', 100, 'published', v_cruz_id) RETURNING id INTO v_asgn6_id;
 
-  INSERT INTO quizzes (id, course_id, title, description, quiz_type, time_limit, points_possible, allowed_attempts, shuffle_answers, show_correct_answers, due_date, status, passing_score, instructions)
-  VALUES (gen_random_uuid(), v_his301_id, 'Early Church Quiz', 'Test your knowledge of the first 300 years', 'graded', 25, 50, 1, true, false, '2026-10-20', 'published', 70, '25 minutes. One attempt only.') RETURNING id INTO v_quiz3_id;
+  INSERT INTO quizzes (id, course_id, title, description, quiz_type, time_limit, points_possible, allowed_attempts, shuffle_answers, show_correct_answers, due_date, status, passing_score, instructions, created_by)
+  VALUES (gen_random_uuid(), v_his301_id, 'Early Church Quiz', 'Test your knowledge of the first 300 years', 'graded', 25, 50, 1, true, false, '2026-10-20', 'published', 70, '25 minutes. One attempt only.', v_cruz_id) RETURNING id INTO v_quiz3_id;
 
   INSERT INTO quiz_questions (id, quiz_id, question_text, question_type, points, position) VALUES (gen_random_uuid(), v_quiz3_id, 'In what year did Constantine issue the Edict of Milan?', 'multiple_choice', 10, 1) RETURNING id INTO v_q10_id;
   INSERT INTO quiz_answers (question_id, answer_text, is_correct, position) VALUES (v_q10_id, '313 AD', true, 1), (v_q10_id, '325 AD', false, 2), (v_q10_id, '380 AD', false, 3), (v_q10_id, '301 AD', false, 4);
