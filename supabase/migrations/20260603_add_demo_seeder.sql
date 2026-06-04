@@ -2,14 +2,12 @@
   # Demo Data Seeder & Cleanup
 
   Creates two SQL functions:
-  - seed_demo_data() — populates a full demo scenario
+  - seed_demo_data(p_user_ids jsonb) — populates demo data using provided user IDs
   - cleanup_demo_data() — removes all demo data
 
-  All demo users have emails ending with @demo.mbsina.org
-  All demo passwords: Demo@1234
+  Auth users are created client-side via signUp (so Supabase Auth properly hashes passwords).
+  The client then passes user IDs to seed_demo_data for profiles, courses, and all related data.
 */
-
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 -- ============================================
 -- CLEANUP FUNCTION (idempotent, safe to re-run)
@@ -42,9 +40,9 @@ END;
 $$;
 
 -- ============================================
--- SEED FUNCTION
+-- SEED FUNCTION (takes user IDs from client)
 -- ============================================
-CREATE OR REPLACE FUNCTION seed_demo_data()
+CREATE OR REPLACE FUNCTION seed_demo_data(p_user_ids jsonb)
 RETURNS jsonb
 LANGUAGE plpgsql
 SECURITY DEFINER
@@ -67,49 +65,23 @@ DECLARE
   v_rubric1_id uuid;
   v_attempt1_id uuid; v_attempt2_id uuid;
   v_bank_id uuid; v_cat1_id uuid; v_cat2_id uuid;
-  demo_password text;
 BEGIN
-  demo_password := crypt('Demo@1234', gen_salt('bf'));
-  PERFORM cleanup_demo_data();
+  -- Extract user IDs from the JSON parameter (passed from client after signUp)
+  v_santos_id := (p_user_ids->>'santos@demo.mbsina.org')::uuid;
+  v_reyes_id := (p_user_ids->>'reyes@demo.mbsina.org')::uuid;
+  v_cruz_id := (p_user_ids->>'cruz@demo.mbsina.org')::uuid;
+  v_marco_id := (p_user_ids->>'marco@demo.mbsina.org')::uuid;
+  v_maria_id := (p_user_ids->>'maria@demo.mbsina.org')::uuid;
+  v_juan_id := (p_user_ids->>'juan@demo.mbsina.org')::uuid;
+  v_ana_id := (p_user_ids->>'ana@demo.mbsina.org')::uuid;
+  v_pedro_id := (p_user_ids->>'pedro@demo.mbsina.org')::uuid;
+  v_rosa_id := (p_user_ids->>'rosa@demo.mbsina.org')::uuid;
+  v_luis_id := (p_user_ids->>'luis@demo.mbsina.org')::uuid;
+  v_carmen_id := (p_user_ids->>'carmen@demo.mbsina.org')::uuid;
+  v_diego_id := (p_user_ids->>'diego@demo.mbsina.org')::uuid;
 
-  -- ==========================================
-  -- AUTH USERS
-  -- ==========================================
-  INSERT INTO auth.users (id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at, raw_app_meta_data, raw_user_meta_data)
-  VALUES (gen_random_uuid(), 'authenticated', 'authenticated', 'santos@demo.mbsina.org', demo_password, now(), now(), now(), '{"provider":"email","providers":["email"]}', '{"full_name":"Prof. Santos"}') RETURNING id INTO v_santos_id;
-
-  INSERT INTO auth.users (id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at, raw_app_meta_data, raw_user_meta_data)
-  VALUES (gen_random_uuid(), 'authenticated', 'authenticated', 'reyes@demo.mbsina.org', demo_password, now(), now(), now(), '{"provider":"email","providers":["email"]}', '{"full_name":"Prof. Reyes"}') RETURNING id INTO v_reyes_id;
-
-  INSERT INTO auth.users (id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at, raw_app_meta_data, raw_user_meta_data)
-  VALUES (gen_random_uuid(), 'authenticated', 'authenticated', 'cruz@demo.mbsina.org', demo_password, now(), now(), now(), '{"provider":"email","providers":["email"]}', '{"full_name":"Prof. Cruz"}') RETURNING id INTO v_cruz_id;
-
-  INSERT INTO auth.users (id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at, raw_app_meta_data, raw_user_meta_data)
-  VALUES (gen_random_uuid(), 'authenticated', 'authenticated', 'marco@demo.mbsina.org', demo_password, now(), now(), now(), '{"provider":"email","providers":["email"]}', '{"full_name":"Marco Rivera"}') RETURNING id INTO v_marco_id;
-
-  INSERT INTO auth.users (id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at, raw_app_meta_data, raw_user_meta_data)
-  VALUES (gen_random_uuid(), 'authenticated', 'authenticated', 'maria@demo.mbsina.org', demo_password, now(), now(), now(), '{"provider":"email","providers":["email"]}', '{"full_name":"Maria Garcia"}') RETURNING id INTO v_maria_id;
-
-  INSERT INTO auth.users (id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at, raw_app_meta_data, raw_user_meta_data)
-  VALUES (gen_random_uuid(), 'authenticated', 'authenticated', 'juan@demo.mbsina.org', demo_password, now(), now(), now(), '{"provider":"email","providers":["email"]}', '{"full_name":"Juan Dela Cruz"}') RETURNING id INTO v_juan_id;
-
-  INSERT INTO auth.users (id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at, raw_app_meta_data, raw_user_meta_data)
-  VALUES (gen_random_uuid(), 'authenticated', 'authenticated', 'ana@demo.mbsina.org', demo_password, now(), now(), now(), '{"provider":"email","providers":["email"]}', '{"full_name":"Ana Reyes"}') RETURNING id INTO v_ana_id;
-
-  INSERT INTO auth.users (id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at, raw_app_meta_data, raw_user_meta_data)
-  VALUES (gen_random_uuid(), 'authenticated', 'authenticated', 'pedro@demo.mbsina.org', demo_password, now(), now(), now(), '{"provider":"email","providers":["email"]}', '{"full_name":"Pedro Santos"}') RETURNING id INTO v_pedro_id;
-
-  INSERT INTO auth.users (id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at, raw_app_meta_data, raw_user_meta_data)
-  VALUES (gen_random_uuid(), 'authenticated', 'authenticated', 'rosa@demo.mbsina.org', demo_password, now(), now(), now(), '{"provider":"email","providers":["email"]}', '{"full_name":"Rosa Mendoza"}') RETURNING id INTO v_rosa_id;
-
-  INSERT INTO auth.users (id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at, raw_app_meta_data, raw_user_meta_data)
-  VALUES (gen_random_uuid(), 'authenticated', 'authenticated', 'luis@demo.mbsina.org', demo_password, now(), now(), now(), '{"provider":"email","providers":["email"]}', '{"full_name":"Luis Ramos"}') RETURNING id INTO v_luis_id;
-
-  INSERT INTO auth.users (id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at, raw_app_meta_data, raw_user_meta_data)
-  VALUES (gen_random_uuid(), 'authenticated', 'authenticated', 'carmen@demo.mbsina.org', demo_password, now(), now(), now(), '{"provider":"email","providers":["email"]}', '{"full_name":"Carmen Villareal"}') RETURNING id INTO v_carmen_id;
-
-  INSERT INTO auth.users (id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at, raw_app_meta_data, raw_user_meta_data)
-  VALUES (gen_random_uuid(), 'authenticated', 'authenticated', 'diego@demo.mbsina.org', demo_password, now(), now(), now(), '{"provider":"email","providers":["email"]}', '{"full_name":"Diego Santiago"}') RETURNING id INTO v_diego_id;
+  -- Auto-confirm emails for all demo users (signUp may leave them unconfirmed)
+  UPDATE auth.users SET email_confirmed_at = now() WHERE email LIKE '%@demo.mbsina.org';
 
   -- ==========================================
   -- PROFILES
@@ -126,7 +98,8 @@ BEGIN
     (v_rosa_id, 'rosa@demo.mbsina.org', 'Rosa Mendoza', 'student'),
     (v_luis_id, 'luis@demo.mbsina.org', 'Luis Ramos', 'student'),
     (v_carmen_id, 'carmen@demo.mbsina.org', 'Carmen Villareal', 'student'),
-    (v_diego_id, 'diego@demo.mbsina.org', 'Diego Santiago', 'student');
+    (v_diego_id, 'diego@demo.mbsina.org', 'Diego Santiago', 'student')
+  ON CONFLICT (id) DO NOTHING;
 
   -- ==========================================
   -- COURSE 1: BIB101 Biblical Foundations I
