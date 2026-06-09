@@ -76,8 +76,6 @@ export default function MetricsPage() {
     });
   };
 
-  const sorted = applySorting(filtered);
-
   const SortHeader = ({ label, sortKey, align = 'left' }: { label: string; sortKey: string; align?: 'left' | 'right' | 'center' }) => {
     const isActive = sort?.key === sortKey;
     const isSecondary = secondarySort?.key === sortKey && !isActive;
@@ -124,6 +122,7 @@ export default function MetricsPage() {
   const filtered = students.filter((s) =>
     s.full_name.toLowerCase().includes(search.toLowerCase())
   );
+  const sorted = applySorting(filtered);
 
   const handleSaveStudent = async (data: Partial<StudentMetricsStudent>) => {
     if (editingStudent) {
