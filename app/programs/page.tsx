@@ -65,7 +65,7 @@ export default function ProgramsPage() {
               href="/login"
               className="inline-flex items-center px-6 py-2.5 bg-blue-900 text-white text-sm font-medium hover:bg-blue-800 transition-colors shadow-sm"
             >
-              Student Portal
+              Portal Login
             </Link>
           </div>
         </div>
@@ -363,7 +363,7 @@ export default function ProgramsPage() {
                       href="/login"
                       className="inline-flex items-center justify-center px-8 py-4 bg-blue-900 text-white text-base font-semibold hover:bg-blue-800 transition-all shadow-sm"
                     >
-                      Apply Through Student Portal
+                      Apply Through Portal Login
                     </Link>
                     <a
                       href="mailto:info@mbsina.org"

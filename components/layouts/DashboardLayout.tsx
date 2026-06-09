@@ -36,6 +36,7 @@ const navigation: NavItem[] = [
   { name: 'Calendar', href: '/calendar', icon: CalendarIcon },
   { name: 'Observers', href: '/observers', icon: EyeIcon, roles: ['observer'] },
   { name: 'Users', href: '/users', icon: UserGroupIcon, roles: ['admin', 'teacher'] },
+  { name: 'User Admin', href: '/admin/users', icon: UserGroupIcon, roles: ['admin'] },
   { name: 'Metrics', href: '/metrics', icon: ChartBarIcon, roles: ['admin', 'teacher', 'ta'] },
   { name: 'Advancement', href: '/advancement', icon: ClipboardDocumentCheckIcon, roles: ['admin', 'teacher', 'ta'] },
   { name: 'Demo', href: '/admin/demo', icon: BeakerIcon, roles: ['admin'] },

@@ -156,15 +156,9 @@ export default function Home() {
             <div className="flex items-center space-x-4">
               <Link
                 href="/login"
-                className="hidden sm:inline-flex items-center px-6 py-2.5 text-sm font-medium text-blue-900 hover:text-blue-800 transition-colors"
-              >
-                Portal Login
-              </Link>
-              <Link
-                href="/login"
                 className="inline-flex items-center px-6 py-2.5 bg-blue-900 text-white text-sm font-medium hover:bg-blue-800 transition-colors shadow-sm"
               >
-                Sign In
+                Portal Login
               </Link>
             </div>
           </div>
@@ -567,7 +561,7 @@ export default function Home() {
                 <li><Link href="/about" className="text-gray-400 hover:text-white text-sm transition-colors">About Us</Link></li>
                 <li><Link href="/programs" className="text-gray-400 hover:text-white text-sm transition-colors">Programs</Link></li>
                 <li><Link href="/faculty" className="text-gray-400 hover:text-white text-sm transition-colors">Faculty</Link></li>
-                <li><Link href="/login" className="text-gray-400 hover:text-white text-sm transition-colors">Student Portal</Link></li>
+                <li><Link href="/login" className="text-gray-400 hover:text-white text-sm transition-colors">Portal Login</Link></li>
               </ul>
             </div>
 

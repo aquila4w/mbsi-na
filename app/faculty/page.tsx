@@ -81,7 +81,7 @@ export default function FacultyPage() {
               href="/login"
               className="inline-flex items-center px-6 py-2.5 bg-blue-900 text-white text-sm font-medium hover:bg-blue-800 transition-colors shadow-sm"
             >
-              Student Portal
+              Portal Login
             </Link>
           </div>
         </div>

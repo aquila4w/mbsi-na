@@ -12,6 +12,7 @@ interface Profile {
   avatar_url: string | null;
   role: UserRole;
   bio: string | null;
+  must_change_password: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -82,6 +83,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     return () => subscription.unsubscribe();
   }, []);
+
+  // Force redirect to /change-password when must_change_password is true
+  useEffect(() => {
+    if (!loading && profile?.must_change_password) {
+      const pathname = window.location.pathname;
+      if (pathname !== '/change-password') {
+        router.push('/change-password');
+      }
+    }
+  }, [loading, profile, router]);
 
   const signIn = async (email: string, password: string) => {
     try {
