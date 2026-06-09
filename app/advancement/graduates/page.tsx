@@ -60,7 +60,7 @@ export default function GraduatesPage() {
   };
 
   return (
-    <ProtectedRoute allowedRoles={['admin']}>
+    <ProtectedRoute allowedRoles={['admin', 'teacher', 'ta']}>
       <DashboardLayout>
         <div className="space-y-6">
           <div>
