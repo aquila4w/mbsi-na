@@ -13,7 +13,7 @@ import { StudentMetricsStudent } from '@/lib/studentMetrics/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { PlusIcon, MagnifyingGlassIcon, PencilIcon, TrashIcon, ChartBarIcon, UserGroupIcon } from '@heroicons/react/24/outline';
+import { PlusIcon, MagnifyingGlassIcon, PencilIcon, TrashIcon, ChartBarIcon, UserGroupIcon, Squares2X2Icon, QueueListIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
 function fmt$(n: number) {
@@ -27,6 +27,7 @@ export default function MetricsPage() {
   const [search, setSearch] = useState('');
   const [showStudentForm, setShowStudentForm] = useState(false);
   const [editingStudent, setEditingStudent] = useState<StudentMetricsStudent | null>(null);
+  const [viewMode, setViewMode] = useState<'cards' | 'list'>('cards');
 
   const canEdit = profile?.role === 'admin' || profile?.role === 'teacher' || profile?.role === 'ta';
 
@@ -131,14 +132,32 @@ export default function MetricsPage() {
             </TabsList>
 
             <TabsContent value="students" className="mt-6">
-              <div className="relative mb-4">
-                <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <Input
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search students..."
-                  className="pl-9"
-                />
+              <div className="flex items-center gap-3 mb-4">
+                <div className="relative flex-1">
+                  <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Input
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Search students..."
+                    className="pl-9"
+                  />
+                </div>
+                <div className="flex border border-gray-300">
+                  <button
+                    onClick={() => setViewMode('cards')}
+                    className={`p-2 transition-colors ${viewMode === 'cards' ? 'bg-black text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
+                    title="Card view"
+                  >
+                    <Squares2X2Icon className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => setViewMode('list')}
+                    className={`p-2 transition-colors ${viewMode === 'list' ? 'bg-black text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
+                    title="List view"
+                  >
+                    <QueueListIcon className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
 
               {loading ? (
@@ -150,7 +169,7 @@ export default function MetricsPage() {
                   <UserGroupIcon className="mx-auto w-12 h-12 mb-3 opacity-30" />
                   <p>{search ? 'No students match your search.' : 'No students yet.'}</p>
                 </div>
-              ) : (
+              ) : viewMode === 'cards' ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                   {filtered.map((s) => (
                     <div key={s.id} className="relative group">
@@ -177,6 +196,88 @@ export default function MetricsPage() {
                       )}
                     </div>
                   ))}
+                </div>
+              ) : (
+                <div className="bg-white border border-gray-200 overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-gray-50 border-b-2 border-gray-200">
+                      <tr>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wide">Student</th>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wide">Level</th>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wide">Assignment</th>
+                        <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wide">Guests</th>
+                        <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wide">Baptisms</th>
+                        <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wide">Converts</th>
+                        <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wide">Thanksgiving</th>
+                        <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wide">Tithes</th>
+                        <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wide">Yrs</th>
+                        {canEdit && (
+                          <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wide">Actions</th>
+                        )}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200">
+                      {filtered.map((s) => {
+                        const latest = s.records[s.records.length - 1];
+                        const carolingRate = s.totals.years_count > 0 ? Math.round((s.totals.caroling_goals_reached / s.totals.years_count) * 100) : 0;
+                        return (
+                          <tr key={s.id} className="hover:bg-gray-50 transition-colors group">
+                            <td className="px-4 py-3 whitespace-nowrap">
+                              <Link href={`/metrics/${s.id}`} className="flex items-center gap-3">
+                                <div className="w-8 h-8 bg-gray-900 flex items-center justify-center shrink-0">
+                                  <span className="text-white text-xs font-bold">
+                                    {s.full_name.split(' ').map((w) => w[0]).slice(0, 2).join('')}
+                                  </span>
+                                </div>
+                                <div>
+                                  <p className="font-medium text-gray-900 group-hover:text-black">{s.full_name}</p>
+                                  <p className="text-xs text-gray-500">
+                                    {s.date_entered ? `Entered ${new Date(s.date_entered).getFullYear()}` : ''}
+                                  </p>
+                                </div>
+                              </Link>
+                            </td>
+                            <td className="px-4 py-3 whitespace-nowrap">
+                              {latest && (
+                                <span className="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 font-medium">
+                                  {latest.year_level}
+                                </span>
+                              )}
+                            </td>
+                            <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600">
+                              {latest?.assignment || '—'}
+                            </td>
+                            <td className="px-4 py-3 whitespace-nowrap text-right text-sm font-medium">{s.totals.guests.toLocaleString()}</td>
+                            <td className="px-4 py-3 whitespace-nowrap text-right text-sm font-medium text-blue-900">{s.totals.baptisms_total}</td>
+                            <td className="px-4 py-3 whitespace-nowrap text-right text-sm font-medium">{s.totals.converts}</td>
+                            <td className="px-4 py-3 whitespace-nowrap text-right text-sm font-medium text-green-900">{fmt$(s.totals.thanksgiving_offering)}</td>
+                            <td className="px-4 py-3 whitespace-nowrap text-right text-sm font-medium text-purple-900">{fmt$(s.totals.tithes)}</td>
+                            <td className="px-4 py-3 whitespace-nowrap text-center text-sm text-gray-500">{s.totals.years_count}</td>
+                            {canEdit && (
+                              <td className="px-4 py-3 whitespace-nowrap text-right">
+                                <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                  <button
+                                    onClick={() => openEditStudent(s)}
+                                    className="p-1.5 border border-gray-200 hover:bg-gray-50 rounded"
+                                    title="Edit student"
+                                  >
+                                    <PencilIcon className="w-3.5 h-3.5 text-gray-600" />
+                                  </button>
+                                  <button
+                                    onClick={() => handleDeleteStudent(s)}
+                                    className="p-1.5 border border-gray-200 hover:bg-red-50 rounded"
+                                    title="Delete student"
+                                  >
+                                    <TrashIcon className="w-3.5 h-3.5 text-red-500" />
+                                  </button>
+                                </div>
+                              </td>
+                            )}
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
                 </div>
               )}
             </TabsContent>
