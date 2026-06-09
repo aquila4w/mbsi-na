@@ -163,7 +163,6 @@ export const YEAR_LEVELS = [
   '1st Year Prac',
   '2nd Year Prac',
   '3rd Year',
-  '4th Year',
   '2nd Year (Retained)',
   'Other',
 ];
