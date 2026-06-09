@@ -13,7 +13,7 @@ import { StudentMetricsStudent } from '@/lib/studentMetrics/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { PlusIcon, MagnifyingGlassIcon, PencilIcon, TrashIcon, ChartBarIcon, UserGroupIcon, Squares2X2Icon, QueueListIcon } from '@heroicons/react/24/outline';
+import { PlusIcon, MagnifyingGlassIcon, PencilIcon, TrashIcon, ChartBarIcon, UserGroupIcon, Squares2X2Icon, QueueListIcon, ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
 function fmt$(n: number) {
@@ -28,6 +28,82 @@ export default function MetricsPage() {
   const [showStudentForm, setShowStudentForm] = useState(false);
   const [editingStudent, setEditingStudent] = useState<StudentMetricsStudent | null>(null);
   const [viewMode, setViewMode] = useState<'cards' | 'list'>('cards');
+  const [sort, setSort] = useState<{ key: string; dir: 'asc' | 'desc' } | null>(null);
+  const [secondarySort, setSecondarySort] = useState<{ key: string; dir: 'asc' | 'desc' } | null>(null);
+
+  const handleSort = (key: string) => {
+    setSecondarySort((prev) => {
+      if (sort && sort.key !== key) return { ...sort };
+      return prev;
+    });
+    setSort((prev) => {
+      if (!prev || prev.key !== key) return { key, dir: 'desc' };
+      if (prev.dir === 'desc') return { key, dir: 'asc' };
+      return null; // third click clears
+    });
+  };
+
+  const getSortValue = (s: StudentWithRecords, key: string): string | number => {
+    const latest = s.records[s.records.length - 1];
+    switch (key) {
+      case 'name': return s.full_name.toLowerCase();
+      case 'level': return latest?.year_level?.toLowerCase() || '';
+      case 'assignment': return latest?.assignment?.toLowerCase() || '';
+      case 'guests': return s.totals.guests;
+      case 'baptisms': return s.totals.baptisms_total;
+      case 'converts': return s.totals.converts;
+      case 'thanksgiving': return s.totals.thanksgiving_offering;
+      case 'tithes': return s.totals.tithes;
+      case 'years': return s.totals.years_count;
+      default: return '';
+    }
+  };
+
+  const applySorting = (data: StudentWithRecords[]) => {
+    if (!sort) return data;
+    return [...data].sort((a, b) => {
+      const aVal = getSortValue(a, sort.key);
+      const bVal = getSortValue(b, sort.key);
+      const cmp = aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
+      if (cmp !== 0) return sort.dir === 'asc' ? cmp : -cmp;
+      if (secondarySort) {
+        const a2 = getSortValue(a, secondarySort.key);
+        const b2 = getSortValue(b, secondarySort.key);
+        const cmp2 = a2 < b2 ? -1 : a2 > b2 ? 1 : 0;
+        return secondarySort.dir === 'asc' ? cmp2 : -cmp2;
+      }
+      return 0;
+    });
+  };
+
+  const sorted = applySorting(filtered);
+
+  const SortHeader = ({ label, sortKey, align = 'left' }: { label: string; sortKey: string; align?: 'left' | 'right' | 'center' }) => {
+    const isActive = sort?.key === sortKey;
+    const isSecondary = secondarySort?.key === sortKey && !isActive;
+    return (
+      <th
+        className={`px-4 py-3 text-xs font-medium uppercase tracking-wide cursor-pointer select-none hover:text-black transition-colors ${
+          align === 'right' ? 'text-right' : align === 'center' ? 'text-center' : 'text-left'
+        } ${isActive ? 'text-black' : 'text-gray-500'}`}
+        onClick={() => handleSort(sortKey)}
+      >
+        <span className="inline-flex items-center gap-1">
+          {label}
+          {isActive && (
+            sort.dir === 'asc'
+              ? <ChevronUpIcon className="w-3 h-3" />
+              : <ChevronDownIcon className="w-3 h-3" />
+          )}
+          {isSecondary && (
+            secondarySort.dir === 'asc'
+              ? <ChevronUpIcon className="w-3 h-3 opacity-40" />
+              : <ChevronDownIcon className="w-3 h-3 opacity-40" />
+          )}
+        </span>
+      </th>
+    );
+  };
 
   const canEdit = profile?.role === 'admin' || profile?.role === 'teacher' || profile?.role === 'ta';
 
@@ -202,22 +278,22 @@ export default function MetricsPage() {
                   <table className="w-full">
                     <thead className="bg-gray-50 border-b-2 border-gray-200">
                       <tr>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wide">Student</th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wide">Level</th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wide">Assignment</th>
-                        <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wide">Guests</th>
-                        <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wide">Baptisms</th>
-                        <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wide">Converts</th>
-                        <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wide">Thanksgiving</th>
-                        <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wide">Tithes</th>
-                        <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wide">Yrs</th>
+                        <SortHeader label="Student" sortKey="name" />
+                        <SortHeader label="Level" sortKey="level" />
+                        <SortHeader label="Assignment" sortKey="assignment" />
+                        <SortHeader label="Guests" sortKey="guests" align="right" />
+                        <SortHeader label="Baptisms" sortKey="baptisms" align="right" />
+                        <SortHeader label="Converts" sortKey="converts" align="right" />
+                        <SortHeader label="Thanksgiving" sortKey="thanksgiving" align="right" />
+                        <SortHeader label="Tithes" sortKey="tithes" align="right" />
+                        <SortHeader label="Yrs" sortKey="years" align="center" />
                         {canEdit && (
                           <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wide">Actions</th>
                         )}
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
-                      {filtered.map((s) => {
+                      {sorted.map((s) => {
                         const latest = s.records[s.records.length - 1];
                         const carolingRate = s.totals.years_count > 0 ? Math.round((s.totals.caroling_goals_reached / s.totals.years_count) * 100) : 0;
                         return (
