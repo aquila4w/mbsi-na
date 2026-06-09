@@ -37,7 +37,7 @@ const navigation: NavItem[] = [
   { name: 'Observers', href: '/observers', icon: EyeIcon, roles: ['observer'] },
   { name: 'Users', href: '/users', icon: UserGroupIcon, roles: ['admin'] },
   { name: 'User Admin', href: '/admin/users', icon: UserGroupIcon, roles: ['admin'] },
-  { name: 'Metrics', href: '/metrics', icon: ChartBarIcon, roles: ['admin', 'teacher', 'ta'] },
+  { name: 'Students', href: '/metrics', icon: ChartBarIcon, roles: ['admin', 'teacher', 'ta'] },
   { name: 'Advancement', href: '/advancement', icon: ClipboardDocumentCheckIcon, roles: ['admin', 'teacher', 'ta'] },
   { name: 'Demo', href: '/admin/demo', icon: BeakerIcon, roles: ['admin'] },
   { name: 'Settings', href: '/settings', icon: Cog6ToothIcon },
