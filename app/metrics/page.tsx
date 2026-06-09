@@ -32,8 +32,8 @@ export default function MetricsPage() {
   const [secondarySort, setSecondarySort] = useState<{ key: string; dir: 'asc' | 'desc' } | null>(null);
 
   const handleSort = (key: string, shiftKey: boolean) => {
-    if (shiftKey && sort) {
-      // Shift+Click: set or toggle secondary sort
+    if (shiftKey && sort && sort.key !== key) {
+      // Shift+Click different column: set or toggle secondary sort
       setSecondarySort((prev) => {
         if (prev && prev.key === key) {
           if (prev.dir === 'desc') return { key, dir: 'asc' };
@@ -41,15 +41,16 @@ export default function MetricsPage() {
         }
         return { key, dir: 'desc' };
       });
-    } else {
+    } else if (!shiftKey) {
       // Normal click: set primary sort, clear secondary
       setSort((prev) => {
         if (!prev || prev.key !== key) return { key, dir: 'desc' };
         if (prev.dir === 'desc') return { key, dir: 'asc' };
-        return null; // third click clears
+        return null; // third click clears primary
       });
       setSecondarySort(null);
     }
+    // Shift+Click same column as primary: ignored
   };
 
   const getSortValue = (s: StudentWithRecords, key: string): string | number => {
@@ -68,18 +69,22 @@ export default function MetricsPage() {
     }
   };
 
+  const compare = (a: StudentWithRecords, b: StudentWithRecords, sortConfig: { key: string; dir: 'asc' | 'desc' }): number => {
+    const aVal = getSortValue(a, sortConfig.key);
+    const bVal = getSortValue(b, sortConfig.key);
+    const cmp = aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
+    return sortConfig.dir === 'asc' ? cmp : -cmp;
+  };
+
   const applySorting = (data: StudentWithRecords[]) => {
-    if (!sort) return data;
+    if (!sort && !secondarySort) return data;
     return [...data].sort((a, b) => {
-      const aVal = getSortValue(a, sort.key);
-      const bVal = getSortValue(b, sort.key);
-      const cmp = aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
-      if (cmp !== 0) return sort.dir === 'asc' ? cmp : -cmp;
+      if (sort) {
+        const primary = compare(a, b, sort);
+        if (primary !== 0) return primary;
+      }
       if (secondarySort) {
-        const a2 = getSortValue(a, secondarySort.key);
-        const b2 = getSortValue(b, secondarySort.key);
-        const cmp2 = a2 < b2 ? -1 : a2 > b2 ? 1 : 0;
-        return secondarySort.dir === 'asc' ? cmp2 : -cmp2;
+        return compare(a, b, secondarySort);
       }
       return 0;
     });
