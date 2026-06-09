@@ -264,14 +264,13 @@ export default function SessionDetailPage() {
                                   <div className="flex flex-wrap gap-1">
                                     {Object.entries(OUTCOME_LABELS).map(([key, label]) => {
                                       const colors = OUTCOME_COLORS[key as keyof typeof OUTCOME_COLORS];
+                                      const isSelected = editingOutcome === key;
                                       return (
                                         <button
                                           key={key}
                                           onClick={() => setEditingOutcome(key)}
-                                          className={`px-2 py-1.5 text-xs font-medium transition-colors ${
-                                            editingOutcome === key
-                                              ? colors.btn
-                                              : `${colors.bg} ${colors.text} hover:opacity-80`
+                                          className={`px-2 py-1.5 text-xs font-medium border transition-colors ${colors.bg} ${colors.text} ${
+                                            isSelected ? `${colors.border} border-2 font-bold` : `border-transparent hover:opacity-80`
                                           }`}
                                         >
                                           {label}

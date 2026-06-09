@@ -12,55 +12,47 @@ export const OUTCOME_LABELS: Record<AdvancementOutcome, string> = {
   graduated: 'Graduated',
 };
 
-// Outcome color classes for badges and buttons
-export const OUTCOME_COLORS: Record<AdvancementOutcome, { bg: string; text: string; border: string; btn: string }> = {
+// Outcome color classes for badges and buttons (same classes used for both)
+export const OUTCOME_COLORS: Record<AdvancementOutcome, { bg: string; text: string; border: string }> = {
   advanced: {
     bg: 'bg-green-100',
     text: 'text-green-800',
     border: 'border-green-300',
-    btn: 'bg-green-600 hover:bg-green-700 text-white',
   },
   conditional_1: {
     bg: 'bg-blue-100',
     text: 'text-blue-800',
     border: 'border-blue-300',
-    btn: 'bg-blue-600 hover:bg-blue-700 text-white',
   },
   conditional_2: {
     bg: 'bg-amber-100',
     text: 'text-amber-800',
     border: 'border-amber-300',
-    btn: 'bg-amber-600 hover:bg-amber-700 text-white',
   },
   retained: {
     bg: 'bg-orange-200',
     text: 'text-orange-900',
     border: 'border-orange-400',
-    btn: 'bg-orange-600 hover:bg-orange-700 text-white',
   },
   suspended: {
     bg: 'bg-red-100',
     text: 'text-red-800',
     border: 'border-red-300',
-    btn: 'bg-red-600 hover:bg-red-700 text-white',
   },
   expelled: {
     bg: 'bg-red-300',
     text: 'text-red-900',
     border: 'border-red-500',
-    btn: 'bg-red-800 hover:bg-red-900 text-white',
   },
   honorable_discharge: {
     bg: 'bg-gray-100',
     text: 'text-gray-700',
     border: 'border-gray-300',
-    btn: 'bg-gray-500 hover:bg-gray-600 text-white',
   },
   graduated: {
     bg: 'bg-purple-100',
     text: 'text-purple-800',
     border: 'border-purple-300',
-    btn: 'bg-purple-600 hover:bg-purple-700 text-white',
   },
 };
 
