@@ -262,19 +262,22 @@ export default function SessionDetailPage() {
                               {isEditing && !isLocked ? (
                                 <div className="space-y-2 w-full sm:w-auto">
                                   <div className="flex flex-wrap gap-1">
-                                    {Object.entries(OUTCOME_LABELS).map(([key, label]) => (
-                                      <button
-                                        key={key}
-                                        onClick={() => setEditingOutcome(key)}
-                                        className={`px-2 py-1.5 text-xs font-medium transition-colors ${
-                                          editingOutcome === key
-                                            ? OUTCOME_COLORS[key as keyof typeof OUTCOME_COLORS].btn
-                                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                                        }`}
-                                      >
-                                        {label}
-                                      </button>
-                                    ))}
+                                    {Object.entries(OUTCOME_LABELS).map(([key, label]) => {
+                                      const colors = OUTCOME_COLORS[key as keyof typeof OUTCOME_COLORS];
+                                      return (
+                                        <button
+                                          key={key}
+                                          onClick={() => setEditingOutcome(key)}
+                                          className={`px-2 py-1.5 text-xs font-medium transition-colors ${
+                                            editingOutcome === key
+                                              ? colors.btn
+                                              : `${colors.bg} ${colors.text} hover:opacity-80`
+                                          }`}
+                                        >
+                                          {label}
+                                        </button>
+                                      );
+                                    })}
                                   </div>
                                   {editingOutcome && (
                                     <OutcomeForm
