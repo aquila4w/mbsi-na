@@ -31,16 +31,25 @@ export default function MetricsPage() {
   const [sort, setSort] = useState<{ key: string; dir: 'asc' | 'desc' } | null>(null);
   const [secondarySort, setSecondarySort] = useState<{ key: string; dir: 'asc' | 'desc' } | null>(null);
 
-  const handleSort = (key: string) => {
-    setSecondarySort((prev) => {
-      if (sort && sort.key !== key) return { ...sort };
-      return prev;
-    });
-    setSort((prev) => {
-      if (!prev || prev.key !== key) return { key, dir: 'desc' };
-      if (prev.dir === 'desc') return { key, dir: 'asc' };
-      return null; // third click clears
-    });
+  const handleSort = (key: string, shiftKey: boolean) => {
+    if (shiftKey && sort) {
+      // Shift+Click: set or toggle secondary sort
+      setSecondarySort((prev) => {
+        if (prev && prev.key === key) {
+          if (prev.dir === 'desc') return { key, dir: 'asc' };
+          return null; // third click clears secondary
+        }
+        return { key, dir: 'desc' };
+      });
+    } else {
+      // Normal click: set primary sort, clear secondary
+      setSort((prev) => {
+        if (!prev || prev.key !== key) return { key, dir: 'desc' };
+        if (prev.dir === 'desc') return { key, dir: 'asc' };
+        return null; // third click clears
+      });
+      setSecondarySort(null);
+    }
   };
 
   const getSortValue = (s: StudentWithRecords, key: string): string | number => {
@@ -84,7 +93,7 @@ export default function MetricsPage() {
         className={`px-4 py-3 text-xs font-medium uppercase tracking-wide cursor-pointer select-none hover:text-black transition-colors ${
           align === 'right' ? 'text-right' : align === 'center' ? 'text-center' : 'text-left'
         } ${isActive ? 'text-black' : 'text-gray-500'}`}
-        onClick={() => handleSort(sortKey)}
+        onClick={(e) => handleSort(sortKey, e.shiftKey)}
       >
         <span className="inline-flex items-center gap-1">
           {label}
