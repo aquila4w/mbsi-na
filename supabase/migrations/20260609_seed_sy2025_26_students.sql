@@ -73,7 +73,7 @@ INSERT INTO student_enrollments (student_id, level_id, academic_year, enrolled_a
 SELECT s.id, l.id, '2025-2026', s.date_entered, 'active'
 FROM student_metrics_students s
 JOIN mbsi_levels l ON l.id = s.current_level_id
-WHERE s.id LIKE 'a0000001-0000-0000-0000-%'
+WHERE s.id::text LIKE 'a0000001-0000-0000-0000-%'
 ON CONFLICT DO NOTHING;
 
 -- ============================================
@@ -111,7 +111,7 @@ SELECT
   true
 FROM student_metrics_students s
 LEFT JOIN student_enrollments e ON e.student_id = s.id AND e.academic_year = '2025-2026'
-WHERE s.id LIKE 'a0000001-0000-0000-0000-%'
+WHERE s.id::text LIKE 'a0000001-0000-0000-0000-%'
 ON CONFLICT DO NOTHING;
 
 -- ============================================
@@ -364,7 +364,7 @@ SELECT s.id,
   l.code
 FROM student_metrics_students s
 JOIN mbsi_levels l ON l.id = s.current_level_id
-WHERE s.id LIKE 'a0000001-0000-0000-0000-%';
+WHERE s.id::text LIKE 'a0000001-0000-0000-0000-%';
 
 -- ============================================
 -- 5. YEAR PROFILES (student_year_profiles)
@@ -388,7 +388,7 @@ SELECT
   END
 FROM student_metrics_students s
 LEFT JOIN student_enrollments e ON e.student_id = s.id AND e.academic_year = '2025-2026'
-WHERE s.id LIKE 'a0000001-0000-0000-0000-%'
+WHERE s.id::text LIKE 'a0000001-0000-0000-0000-%'
 ON CONFLICT (student_id, academic_year) DO NOTHING;
 
 -- ============================================
@@ -417,5 +417,5 @@ SELECT
 FROM student_metrics_students s
 JOIN mbsi_levels l ON l.id = s.current_level_id
 LEFT JOIN student_enrollments e ON e.student_id = s.id AND e.academic_year = '2025-2026'
-WHERE s.id LIKE 'a0000001-0000-0000-0000-%'
+WHERE s.id::text LIKE 'a0000001-0000-0000-0000-%'
 ON CONFLICT (session_id, student_id) DO NOTHING;
