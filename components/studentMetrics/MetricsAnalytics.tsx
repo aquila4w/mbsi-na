@@ -25,20 +25,24 @@ export function MetricsAnalytics({ students }: MetricsAnalyticsProps) {
       Contacts: s.totals.contacts,
       'Thanksgiving ($)': Math.round(s.totals.thanksgiving_offering),
       'Evangelism ($)': Math.round(s.totals.evangelism_offering),
+      'Tithes ($)': Math.round(s.totals.tithes),
+      Converts: s.totals.converts,
     })),
     [students]
   );
 
   const yearlyTrend = useMemo(() => {
-    const byYear: Record<number, { guests: number; baptisms: number; thanksgiving: number; evangelism: number; count: number }> = {};
+    const byYear: Record<number, { guests: number; baptisms: number; thanksgiving: number; evangelism: number; tithes: number; converts: number; count: number }> = {};
     students.forEach((s) => {
       s.records.forEach((r) => {
         if (!r.year) return;
-        if (!byYear[r.year]) byYear[r.year] = { guests: 0, baptisms: 0, thanksgiving: 0, evangelism: 0, count: 0 };
+        if (!byYear[r.year]) byYear[r.year] = { guests: 0, baptisms: 0, thanksgiving: 0, evangelism: 0, tithes: 0, converts: 0, count: 0 };
         byYear[r.year].guests += r.guests || 0;
         byYear[r.year].baptisms += (r.baptisms_us || 0) + (r.baptisms_rrb_ph || 0);
         byYear[r.year].thanksgiving += r.thanksgiving_offering || 0;
         byYear[r.year].evangelism += r.evangelism_offering || 0;
+        byYear[r.year].tithes += r.tithes || 0;
+        byYear[r.year].converts += r.converts || 0;
         byYear[r.year].count++;
       });
     });
@@ -50,6 +54,8 @@ export function MetricsAnalytics({ students }: MetricsAnalyticsProps) {
         'Total Baptisms': d.baptisms,
         'Thanksgiving ($)': Math.round(d.thanksgiving),
         'Evangelism ($)': Math.round(d.evangelism),
+        'Tithes ($)': Math.round(d.tithes),
+        'Converts': d.converts,
       }));
   }, [students]);
 

@@ -89,6 +89,8 @@ export function StudentRecordsGrid({ student, onRefresh, canEdit }: StudentRecor
               <th className="text-right px-3 py-2 font-semibold text-gray-600">Baptisms (PH)</th>
               <th className="text-right px-3 py-2 font-semibold text-gray-600 whitespace-nowrap">Thanksgiving</th>
               <th className="text-right px-3 py-2 font-semibold text-gray-600 whitespace-nowrap">Evangelism</th>
+              <th className="text-right px-3 py-2 font-semibold text-gray-600 whitespace-nowrap">Tithes</th>
+              <th className="text-right px-3 py-2 font-semibold text-gray-600">Converts</th>
               <th className="text-center px-3 py-2 font-semibold text-gray-600 whitespace-nowrap">Caroling Goal</th>
               <th className="text-right px-3 py-2 font-semibold text-gray-600 whitespace-nowrap">Goal Amt</th>
               <th className="text-center px-3 py-2 font-semibold text-gray-600 whitespace-nowrap">Leader</th>
@@ -109,6 +111,8 @@ export function StudentRecordsGrid({ student, onRefresh, canEdit }: StudentRecor
                 <td className="px-3 py-2 text-right">{r.baptisms_rrb_ph > 0 ? r.baptisms_rrb_ph : '-'}</td>
                 <td className="px-3 py-2 text-right text-green-700 font-medium">{fmt$(r.thanksgiving_offering)}</td>
                 <td className="px-3 py-2 text-right text-blue-700 font-medium">{fmt$(r.evangelism_offering)}</td>
+                <td className="px-3 py-2 text-right text-purple-700 font-medium">{r.tithes > 0 ? fmt$(r.tithes) : '-'}</td>
+                <td className="px-3 py-2 text-right">{r.converts > 0 ? r.converts : '-'}</td>
                 <td className="px-3 py-2 text-center"><YesNo value={r.caroling_goal_reached} /></td>
                 <td className="px-3 py-2 text-right">{r.caroling_amount > 0 ? fmt$(r.caroling_amount) : '-'}</td>
                 <td className="px-3 py-2 text-center"><YesNo value={r.caroling_leader} /></td>
@@ -138,7 +142,7 @@ export function StudentRecordsGrid({ student, onRefresh, canEdit }: StudentRecor
 
             {student.records.length === 0 && (
               <tr>
-                <td colSpan={canEdit ? 13 : 12} className="px-3 py-8 text-center text-gray-400 text-sm">
+                <td colSpan={canEdit ? 15 : 14} className="px-3 py-8 text-center text-gray-400 text-sm">
                   No records yet. {canEdit && 'Click "Add Record" to get started.'}
                 </td>
               </tr>
@@ -153,6 +157,8 @@ export function StudentRecordsGrid({ student, onRefresh, canEdit }: StudentRecor
                 <td className="px-3 py-2 text-right">{t.baptisms_rrb_ph > 0 ? t.baptisms_rrb_ph : '-'}</td>
                 <td className="px-3 py-2 text-right text-green-300">{fmt$(t.thanksgiving_offering)}</td>
                 <td className="px-3 py-2 text-right text-blue-300">{fmt$(t.evangelism_offering)}</td>
+                <td className="px-3 py-2 text-right text-purple-300">{fmt$(t.tithes)}</td>
+                <td className="px-3 py-2 text-right">{t.converts > 0 ? t.converts : '-'}</td>
                 <td className="px-3 py-2 text-center">{t.caroling_goals_reached}/{t.years_count}</td>
                 <td className="px-3 py-2 text-right">{fmt$(t.caroling_total_goal)}</td>
                 <td className="px-3 py-2 text-center">{t.caroling_leader_count}/{t.years_count}</td>

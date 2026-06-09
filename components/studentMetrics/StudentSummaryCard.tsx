@@ -54,7 +54,7 @@ export function StudentSummaryCard({ student, onClick }: StudentSummaryCardProps
         )}
       </div>
 
-      <div className="grid grid-cols-4 gap-2 mt-4">
+      <div className="grid grid-cols-3 gap-2 mt-4">
         <div className="bg-gray-50 p-2 text-center">
           <p className="text-lg font-bold text-gray-900">{t.guests.toLocaleString()}</p>
           <p className="text-xs text-gray-500 mt-0.5">Guests</p>
@@ -66,6 +66,16 @@ export function StudentSummaryCard({ student, onClick }: StudentSummaryCardProps
         <div className="bg-green-50 p-2 text-center">
           <p className="text-base font-bold text-green-900">{fmt$(t.thanksgiving_offering)}</p>
           <p className="text-xs text-green-600 mt-0.5">Thanksgiving</p>
+        </div>
+      </div>
+      <div className="grid grid-cols-3 gap-2 mt-2">
+        <div className="bg-gray-50 p-2 text-center">
+          <p className="text-lg font-bold text-gray-900">{t.converts}</p>
+          <p className="text-xs text-gray-500 mt-0.5">Converts</p>
+        </div>
+        <div className="bg-purple-50 p-2 text-center">
+          <p className="text-base font-bold text-purple-900">{fmt$(t.tithes)}</p>
+          <p className="text-xs text-purple-600 mt-0.5">Tithes</p>
         </div>
         <div className="bg-gray-50 p-2 text-center">
           <p className="text-lg font-bold text-gray-900">{carolingRate}%</p>

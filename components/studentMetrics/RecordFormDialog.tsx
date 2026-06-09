@@ -27,6 +27,8 @@ const EMPTY: Partial<StudentMetricsRecord> = {
   baptisms_rrb_ph: 0,
   thanksgiving_offering: 0,
   evangelism_offering: 0,
+  tithes: 0,
+  converts: 0,
   caroling_goal_reached: false,
   caroling_amount: 0,
   caroling_leader: false,
@@ -166,6 +168,27 @@ export function RecordFormDialog({ open, onClose, onSave, record, studentId }: R
               step="0.01"
               value={form.evangelism_offering ?? 0}
               onChange={(e) => set('evangelism_offering', parseFloat(e.target.value) || 0)}
+            />
+          </div>
+
+          <div className="space-y-1">
+            <Label>Tithes ($)</Label>
+            <Input
+              type="number"
+              min={0}
+              step="0.01"
+              value={form.tithes ?? 0}
+              onChange={(e) => set('tithes', parseFloat(e.target.value) || 0)}
+            />
+          </div>
+
+          <div className="space-y-1">
+            <Label>Converts</Label>
+            <Input
+              type="number"
+              min={0}
+              value={form.converts ?? 0}
+              onChange={(e) => set('converts', parseInt(e.target.value) || 0)}
             />
           </div>
 

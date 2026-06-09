@@ -96,6 +96,8 @@ export function StudentYearCard({ node }: { node: TimelineNode }) {
               <MetricBadge label="Contacts" value={decision.metrics_snapshot.contacts} />
               <MetricBadge label="Thanksgiving" value={`$${Number(decision.metrics_snapshot.thanksgiving_offering || 0).toLocaleString()}`} />
               <MetricBadge label="Evangelism" value={`$${Number(decision.metrics_snapshot.evangelism_offering || 0).toLocaleString()}`} />
+              <MetricBadge label="Tithes" value={`$${Number(decision.metrics_snapshot.tithes || 0).toLocaleString()}`} />
+              <MetricBadge label="Converts" value={decision.metrics_snapshot.converts || 0} />
               <MetricBadge label="Caroling" value={decision.metrics_snapshot.caroling_goal_reached ? '✓ Goal' : `$${Number(decision.metrics_snapshot.caroling_amount || 0).toLocaleString()}`} />
             </div>
           </div>
