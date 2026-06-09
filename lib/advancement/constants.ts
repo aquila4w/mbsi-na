@@ -12,6 +12,18 @@ export const OUTCOME_LABELS: Record<AdvancementOutcome, string> = {
   graduated: 'Graduated',
 };
 
+// Outcome descriptions for tooltips
+export const OUTCOME_DESCRIPTIONS: Record<AdvancementOutcome, string> = {
+  advanced: 'Student advances to the next level with no conditions.',
+  conditional_1: 'Student advances with minor conditions to be met within a set period. Failure to meet conditions results in retention.',
+  conditional_2: 'Student advances with major conditions. Closer monitoring and stricter requirements than Conditional (Level 1).',
+  retained: 'Student remains at the current level for another year. Did not meet requirements to advance.',
+  suspended: 'Student is temporarily removed from the program. May be reinstated after a review period.',
+  expelled: 'Student is permanently removed from the program due to serious violations or failure to meet standards.',
+  honorable_discharge: 'Student leaves the program in good standing. May re-enter through the normal enrollment process.',
+  graduated: 'Student has completed all program requirements and is eligible for minister promotion.',
+};
+
 // Outcome color classes for badges and buttons (same classes used for both)
 export const OUTCOME_COLORS: Record<AdvancementOutcome, { bg: string; text: string; border: string }> = {
   advanced: {

@@ -6,6 +6,7 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import { fetchAdvancementHistory, fetchSessions, fetchLevels } from '@/lib/advancement/service';
 import { AdvancementDecision, AdvancementSession, MbsiLevel } from '@/lib/advancement/types';
 import { OUTCOME_LABELS, OUTCOME_COLORS } from '@/lib/advancement/constants';
+import { OutcomeBadge } from '@/components/advancement/OutcomeBadge';
 import { ArrowLeftIcon, FunnelIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
@@ -129,9 +130,7 @@ export default function AdvancementHistoryPage() {
                           <td className="px-4 py-3 text-gray-500">{d.metrics_snapshot?.academic_year || '-'}</td>
                           <td className="px-4 py-3">{d.current_level?.display_name || d.current_level_code}</td>
                           <td className="px-4 py-3">
-                            <span className={`inline-block px-2 py-0.5 text-xs font-medium ${colors.bg} ${colors.text}`}>
-                              {OUTCOME_LABELS[d.outcome]}
-                            </span>
+                            <OutcomeBadge outcome={d.outcome} className="py-0.5" />
                           </td>
                           <td className="px-4 py-3">{d.target_level?.display_name || '-'}</td>
                           <td className="px-4 py-3 text-xs text-gray-600 max-w-xs truncate">{d.conditions || '-'}</td>
@@ -150,9 +149,7 @@ export default function AdvancementHistoryPage() {
                     <div key={d.id} className="border border-gray-200 p-4">
                       <div className="flex items-start justify-between mb-2">
                         <p className="font-medium text-sm">{d.student_name}</p>
-                        <span className={`inline-block px-2 py-0.5 text-xs font-medium ${colors.bg} ${colors.text}`}>
-                          {OUTCOME_LABELS[d.outcome]}
-                        </span>
+                        <OutcomeBadge outcome={d.outcome} className="py-0.5" />
                       </div>
                       <div className="space-y-1 text-xs text-gray-500">
                         <p>Level: {d.current_level?.display_name || d.current_level_code} → {d.target_level?.display_name || '-'}</p>

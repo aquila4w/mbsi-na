@@ -15,6 +15,7 @@ import {
 } from '@/lib/advancement/service';
 import { AdvancementSession, AdvancementDecision, MbsiLevel } from '@/lib/advancement/types';
 import { OUTCOME_LABELS, OUTCOME_COLORS, SESSION_STATUS_INFO, TIER_INFO, sortLevels } from '@/lib/advancement/constants';
+import { OutcomeBadge } from '@/components/advancement/OutcomeBadge';
 import { ArrowLeftIcon, CheckCircleIcon, LockClosedIcon, PlayIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { toast } from 'sonner';
@@ -295,12 +296,10 @@ export default function SessionDetailPage() {
                                 </div>
                               ) : (
                                 <>
-                                  <span className={`inline-block px-2 py-1 text-xs font-medium ${outcomeColors.bg} ${outcomeColors.text} ${outcomeColors.border} border`}>
-                                    {OUTCOME_LABELS[decision.outcome]}
-                                    {targetLevel && decision.outcome !== 'retained' && decision.outcome !== 'suspended' && decision.outcome !== 'expelled' && (
-                                      <span className="ml-1 opacity-75">→ {targetLevel.display_name}</span>
-                                    )}
-                                  </span>
+                                  <OutcomeBadge
+                                    outcome={decision.outcome}
+                                    showTarget={targetLevel?.display_name}
+                                  />
                                   {!isLocked && (
                                     <button
                                       onClick={() => {
