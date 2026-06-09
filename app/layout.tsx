@@ -4,8 +4,8 @@ import { AuthProvider } from '@/contexts/AuthContext';
 import { Toaster } from 'sonner';
 
 export const metadata: Metadata = {
-  title: 'Campus LMS - Learning Management System',
-  description: 'A comprehensive learning management system for educational institutions',
+  title: 'MBSI Admin',
+  description: 'MBSI North America Administration Portal',
   icons: {
     icon: '/mbsi-logo.png',
     apple: '/mbsi-logo.png',

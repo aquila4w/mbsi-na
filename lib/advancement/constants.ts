@@ -33,9 +33,9 @@ export const OUTCOME_COLORS: Record<AdvancementOutcome, { bg: string; text: stri
     btn: 'bg-amber-600 hover:bg-amber-700 text-white',
   },
   retained: {
-    bg: 'bg-orange-100',
-    text: 'text-orange-800',
-    border: 'border-orange-300',
+    bg: 'bg-orange-200',
+    text: 'text-orange-900',
+    border: 'border-orange-400',
     btn: 'bg-orange-600 hover:bg-orange-700 text-white',
   },
   suspended: {
@@ -45,9 +45,9 @@ export const OUTCOME_COLORS: Record<AdvancementOutcome, { bg: string; text: stri
     btn: 'bg-red-600 hover:bg-red-700 text-white',
   },
   expelled: {
-    bg: 'bg-red-200',
+    bg: 'bg-red-300',
     text: 'text-red-900',
-    border: 'border-red-400',
+    border: 'border-red-500',
     btn: 'bg-red-800 hover:bg-red-900 text-white',
   },
   honorable_discharge: {

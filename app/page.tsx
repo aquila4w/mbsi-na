@@ -158,7 +158,7 @@ export default function Home() {
                 href="/login"
                 className="hidden sm:inline-flex items-center px-6 py-2.5 text-sm font-medium text-blue-900 hover:text-blue-800 transition-colors"
               >
-                Student Portal
+                Portal Login
               </Link>
               <Link
                 href="/login"
@@ -212,7 +212,7 @@ export default function Home() {
                     href="/login"
                     className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white text-base font-semibold hover:bg-white hover:text-blue-900 transition-all"
                   >
-                    Student Portal
+                    Portal Login
                   </Link>
                 </div>
                 <div className="border-t border-white/20 pt-6">
@@ -523,7 +523,7 @@ export default function Home() {
                   href="/login"
                   className="inline-flex items-center justify-center px-8 py-4 bg-white text-blue-900 text-base font-semibold hover:bg-gray-100 transition-all shadow-lg"
                 >
-                  Student Portal
+                  Portal Login
                 </Link>
               </div>
             </div>
